@@ -29,3 +29,9 @@
      1. `git config --global user.name "이름"`
      2. `git config --global user.email 아이디@이메일.com`
   - `git clone https://github.com/sihyung92/biz_mobile.git` 
+
+8. 생긴 프로젝트 폴더를 VS Code에서 Open folder로 열기
+
+9. menu > Terminal > New Terminal
+ - yarn add expo
+ - 권한 에러 발생시, 관리자 권한으로 CMD를 켠 후 `Set-ExecutionPolicy RemoteSigned` 입력  
