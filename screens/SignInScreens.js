@@ -6,16 +6,60 @@ export default class LoginScreen extends React.Component {
   static navigationOptions = {
         title: 'Login',
   }
+  constructor(props) {
+    super(props);
+    this.state = {
+      corpId: 418,
+      email: "",
+      password: "",
+      roles: "A",
+      userID: "",
+      userName: ""
+    }
+  }
+  validateID(userID) {
+    console.log("ID Valid : " + userID != null && userID.length === 0);
+    return userID != null && userID.length === 0;
+  }
+
+  validatePassword(password) {
+    console.log("pass Valid : " + password != null && password.length === 0);
+    return password != null && password.length === 0;
+  }
 
   // Send a POST request
   signIn = async() => {
+    console.log(this.state);
+    if(this.validateID(this.state.userID)){
+      // Works on both Android and iOS
+      const alertTitle = '아이디를 입력해주세요.'
+      const alertText = '아이디를 입력해주세요.'
+      if (Platform.OS === 'web') {
+        alert(alertText)
+      } else {
+        Alert.alert(alertTitle, alertText)
+      }
+      return false;
+    }
+    if(this.validatePassword(this.state.password)){
+      // Works on both Android and iOS
+      const alertTitle = '비밀번호를 입력해주세요.'
+      const alertText = '비밀번호를 입력해주세요.'
+      if (Platform.OS === 'web') {
+        alert(alertText)
+      } else {
+        Alert.alert(alertTitle, alertText)
+      }
+      return false;
+    }
+
     const message = await axios.post('http://222.122.82.138/auth/signin',{
-        corpId: 418,
-        email: "abc@biznet.com",
-        password: "admin123",
-        roles: "A",
-        userId: "admin",
-        userName: "admin"
+        corpId: this.state.corpId,
+        email: this.state.email,
+        password: this.state.password,
+        roles: this.state.roles,
+        userId: this.state.ID,
+        userName: this.state.userName
       })
       .then( (response) => {
         console.log(response);
@@ -25,9 +69,8 @@ export default class LoginScreen extends React.Component {
       })
       .catch( (error) => {
         console.log(error);
-        // Works on both Android and iOS
-        const alertTitle = '비밀번호 틀림'
-        const alertText = '비밀번호가 틀렸습니다.'
+        const alertTitle = '로그인 실패'
+        const alertText = '아이디 / 비밀번호가 틀렸습니다.'
         if (Platform.OS === 'web') {
           alert(alertText)
         } else {
@@ -62,7 +105,7 @@ export default class LoginScreen extends React.Component {
             style={styles.inputText}
             placeholder="ID..." 
             placeholderTextColor="#003f5c"
-            onChangeText={text => this.setState({ID:text})}/>
+            onChangeText={text => this.setState({userID:text})}/>
         </View>
         <View style={styles.inputView} >
           <TextInput  
