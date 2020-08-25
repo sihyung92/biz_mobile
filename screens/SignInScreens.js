@@ -1,6 +1,6 @@
 import React from 'react';
-import { StyleSheet, Text, View, TextInput, TouchableOpacity  } from 'react-native';
 import axios from 'axios';
+import { StyleSheet, Text, View, TextInput, TouchableOpacity, AsyncStorage, Alert, Platform } from 'react-native';
 
 export default class LoginScreen extends React.Component {
   static navigationOptions = {
@@ -12,7 +12,7 @@ export default class LoginScreen extends React.Component {
     const message = await axios.post('http://222.122.82.138/auth/signin',{
         corpId: 418,
         email: "abc@biznet.com",
-        password: "admin12",
+        password: "admin123",
         roles: "A",
         userId: "admin",
         userName: "admin"
@@ -20,11 +20,37 @@ export default class LoginScreen extends React.Component {
       .then( (response) => {
         console.log(response);
         console.log(response.data);
+        AsyncStorage.setItem("token", response.data.token);
         this.props.navigation.navigate('Main');
       })
       .catch( (error) => {
         console.log(error);
+        // Works on both Android and iOS
+        const alertTitle = '비밀번호 틀림'
+        const alertText = '비밀번호가 틀렸습니다.'
+        if (Platform.OS === 'web') {
+          alert(alertText)
+        } else {
+          Alert.alert(alertTitle, alertText)
+        }
       }) ;
+
+    // const message = await axios.get('http://localhost:8080/mobile/biz/login.json?flag=login',{
+    //   loginInfo: {
+    //     appTp	 : "W_MAPP",
+    //     userPw : "admin12",
+    //     userId : "ADMIN",
+    //   }
+    // })
+    // .then( (response) => {
+    //   console.log(response);
+    //   console.log(response.data);
+    //   AsyncStorage.setItem("token", response.data.token);
+    //   this.props.navigation.navigate('Main');
+    // })
+    // .catch( (error) => {
+    //   console.log(error);
+    // }) ;
   }
 
   render() {
