@@ -1,9 +1,30 @@
 import React from 'react';
 import { StyleSheet, Text, View, TextInput, TouchableOpacity  } from 'react-native';
+import axios from 'axios';
 
 export default class LoginScreen extends React.Component {
   static navigationOptions = {
         title: 'Login',
+  }
+
+  // Send a POST request
+  signIn = async() => {
+    const message = await axios.post('http://222.122.82.138/auth/signin',{
+        corpId: 418,
+        email: "abc@biznet.com",
+        password: "admin12",
+        roles: "A",
+        userId: "admin",
+        userName: "admin"
+      })
+      .then( (response) => {
+        console.log(response);
+        console.log(response.data);
+        this.props.navigation.navigate('Main');
+      })
+      .catch( (error) => {
+        console.log(error);
+      }) ;
   }
 
   render() {
@@ -28,7 +49,7 @@ export default class LoginScreen extends React.Component {
 
         <TouchableOpacity 
           style={styles.loginBtn}
-          onPress={()=>this.props.navigation.navigate('Main')}>
+          onClick={()=>this.signIn()}>
           <Text style={styles.loginText}>LOGIN</Text>
         </TouchableOpacity>
         <TouchableOpacity>
