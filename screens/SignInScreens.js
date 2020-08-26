@@ -9,29 +9,26 @@ export default class LoginScreen extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      corpId: 418,
-      email: "",
+      corpId: "",
+      corpNm: "",
+      email: "abc@kobiznet.com",
       password: "",
       roles: "A",
-      userID: "",
-      userName: ""
+      userId: "",
+      userLang: "",
     }
   }
-  validateID(userID) {
-    console.log("ID Valid : " + userID != null && userID.length === 0);
-    return userID != null && userID.length === 0;
+
+  validateID(userId) {
+    return userId != null && userId.length === 0;
   }
 
   validatePassword(password) {
-    console.log("pass Valid : " + password != null && password.length === 0);
     return password != null && password.length === 0;
   }
 
-  // Send a POST request
   signIn = async() => {
-    console.log(this.state);
-    if(this.validateID(this.state.userID)){
-      // Works on both Android and iOS
+    if(this.validateID(this.state.userId)){
       const alertTitle = '아이디를 입력해주세요.'
       const alertText = '아이디를 입력해주세요.'
       if (Platform.OS === 'web') {
@@ -41,8 +38,8 @@ export default class LoginScreen extends React.Component {
       }
       return false;
     }
+
     if(this.validatePassword(this.state.password)){
-      // Works on both Android and iOS
       const alertTitle = '비밀번호를 입력해주세요.'
       const alertText = '비밀번호를 입력해주세요.'
       if (Platform.OS === 'web') {
@@ -53,21 +50,19 @@ export default class LoginScreen extends React.Component {
       return false;
     }
 
-    const message = await axios.post('http://222.122.82.138/auth/signin',{
-        corpId: this.state.corpId,
-        email: this.state.email,
-        password: this.state.password,
-        roles: this.state.roles,
-        userId: this.state.ID,
-        userName: this.state.userName
-      })
-      .then( (response) => {
-        console.log(response);
-        console.log(response.data);
-        AsyncStorage.setItem("token", response.data.token);
-        this.props.navigation.navigate('Main');
-      })
-      .catch( (error) => {
+    const message = await axios.post('http://localhost:8080/mobile/biz/login.json?flag=login',{
+      loginInfo: {
+        appTp	 : "W_MAPP",
+        userPw : this.state.password,
+        userId : this.state.userId,
+      }
+    })
+    .then( (response) => {
+      console.log(response);
+      AsyncStorage.setItem("token", response.data.token);
+      this.props.navigation.navigate('Main');
+    })
+    .catch( (error) => {
         console.log(error);
         const alertTitle = '로그인 실패'
         const alertText = '아이디 / 비밀번호가 틀렸습니다.'
@@ -76,24 +71,7 @@ export default class LoginScreen extends React.Component {
         } else {
           Alert.alert(alertTitle, alertText)
         }
-      }) ;
-
-    // const message = await axios.get('http://localhost:8080/mobile/biz/login.json?flag=login',{
-    //   loginInfo: {
-    //     appTp	 : "W_MAPP",
-    //     userPw : "admin12",
-    //     userId : "ADMIN",
-    //   }
-    // })
-    // .then( (response) => {
-    //   console.log(response);
-    //   console.log(response.data);
-    //   AsyncStorage.setItem("token", response.data.token);
-    //   this.props.navigation.navigate('Main');
-    // })
-    // .catch( (error) => {
-    //   console.log(error);
-    // }) ;
+    }) ;
   }
 
   render() {
@@ -105,7 +83,7 @@ export default class LoginScreen extends React.Component {
             style={styles.inputText}
             placeholder="ID..." 
             placeholderTextColor="#003f5c"
-            onChangeText={text => this.setState({userID:text})}/>
+            onChangeText={text => this.setState({userId:text})}/>
         </View>
         <View style={styles.inputView} >
           <TextInput  
@@ -166,3 +144,5 @@ const styles = StyleSheet.create({
     marginBottom:40
   },
 });
+
+
