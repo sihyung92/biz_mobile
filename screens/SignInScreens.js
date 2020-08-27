@@ -1,6 +1,7 @@
 import React from 'react';
 import axios from 'axios';
-import { StyleSheet, Text, View, TextInput, TouchableOpacity, AsyncStorage, Alert, Platform } from 'react-native';
+import { StyleSheet, Text, View, TextInput, TouchableOpacity, AsyncStorage, Alert, Platform, Picker } from 'react-native';
+import { local, test } from '../constant/Constant'
 
 export default class LoginScreen extends React.Component {
   static navigationOptions = {
@@ -9,26 +10,22 @@ export default class LoginScreen extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      corpId: "",
-      corpNm: "",
       email: "abc@kobiznet.com",
       password: "",
       roles: "A",
       userId: "",
-      userLang: "",
+      userLang: "KO",
+      corp: {
+        corpId: "",
+        corpNm: "",
+      },
+      corps: Array(0),
+      langs: Array(0),
     }
   }
-
-  validateID(userId) {
-    return userId != null && userId.length === 0;
-  }
-
-  validatePassword(password) {
-    return password != null && password.length === 0;
-  }
-
-  signIn = async() => {
-    if(this.validateID(this.state.userId)){
+  
+  validateIDAndAlert(userId) {
+    if( userId != null && userId.length === 0 ){
       const alertTitle = '아이디를 입력해주세요.'
       const alertText = '아이디를 입력해주세요.'
       if (Platform.OS === 'web') {
@@ -38,8 +35,10 @@ export default class LoginScreen extends React.Component {
       }
       return false;
     }
+  }
 
-    if(this.validatePassword(this.state.password)){
+  validatePasswordAndAlert(password) {
+    if( password != null && password.length === 0 ){
       const alertTitle = '비밀번호를 입력해주세요.'
       const alertText = '비밀번호를 입력해주세요.'
       if (Platform.OS === 'web') {
@@ -49,8 +48,19 @@ export default class LoginScreen extends React.Component {
       }
       return false;
     }
+  }
 
-    const message = await axios.post('http://localhost:8080/mobile/biz/login.json?flag=login',{
+  signIn = async() => {
+
+    // if( !this.validateIDAndAlert(this.state.userId) ){
+    //   return;
+    // }
+
+    // if( !this.validatePasswordAndAlert(this.state.password) ){
+    //   return;
+    // }
+  
+    const message = await axios.post(local + '/mobile/biz/login.json?flag=login',{
       loginInfo: {
         appTp	 : "W_MAPP",
         userPw : this.state.password,
@@ -58,14 +68,29 @@ export default class LoginScreen extends React.Component {
       }
     })
     .then( (response) => {
+      if ( !response.data.success ){
+        const alertTitle = '로그인 실패'
+        const alertText = '아이디 / 비밀번호가 틀렸습니다.'
+        if (Platform.OS === 'web') {
+          alert(alertText)
+        } else {
+          Alert.alert(alertTitle, alertText)
+        }
+        return;
+      }
+
       console.log(response);
       AsyncStorage.setItem("token", response.data.token);
-      this.props.navigation.navigate('Main');
+      this.setState({
+        corps : response.data.corps,
+        langs : response.data.langs
+      });
+      //this.props.navigation.navigate('Main');
     })
     .catch( (error) => {
         console.log(error);
         const alertTitle = '로그인 실패'
-        const alertText = '아이디 / 비밀번호가 틀렸습니다.'
+        const alertText = '서버에 오류가 발생하였습니다.'
         if (Platform.OS === 'web') {
           alert(alertText)
         } else {
@@ -75,6 +100,15 @@ export default class LoginScreen extends React.Component {
   }
 
   render() {
+    const corps = this.state.corps;
+    const corpList = corps.map((corp, index) => {
+       return (
+        <Picker.Item 
+          key={corp.corpId}
+          label = {corp.corpNm}
+          value = {corp.corpId} />
+       )
+    }) 
     return (
       <View style={styles.container}>
          <Text style={styles.logo}>한국비즈넷</Text>
@@ -93,7 +127,15 @@ export default class LoginScreen extends React.Component {
             placeholderTextColor="#003f5c"
             onChangeText={text => this.setState({password:text})}/>
         </View>
-
+        <Picker
+          selectedValue={this.state.corp}
+          onValueChange={corp => this.setState({ corp })}
+          style={{ width: 160, postion: 'absolute',fontSize:10 }}
+          mode="dropdown"
+          itemStyle={{ color:'red', fontWeight:'900', fontSize: 18, padding:30}}>
+        >
+        {corpList}
+        </Picker>
         <TouchableOpacity 
           style={styles.loginBtn}
           onClick={()=>this.signIn()}>
