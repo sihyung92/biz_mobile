@@ -21,6 +21,7 @@ export default class LoginScreen extends React.Component {
       },
       corps: Array(0),
       langs: Array(0),
+      isLogin : false,
     }
   }
   
@@ -83,9 +84,9 @@ export default class LoginScreen extends React.Component {
       AsyncStorage.setItem("token", response.data.token);
       this.setState({
         corps : response.data.corps,
-        langs : response.data.langs
+        langs : response.data.langs,
+        isLogin : true,
       });
-      //this.props.navigation.navigate('Main');
     })
     .catch( (error) => {
         console.log(error);
@@ -97,6 +98,11 @@ export default class LoginScreen extends React.Component {
           Alert.alert(alertTitle, alertText)
         }
     }) ;
+  }
+
+  signIn2 = () => {
+    console.log(this.state.corp);
+   // this.props.navigation.navigate('Main');
   }
 
   render() {
@@ -138,7 +144,7 @@ export default class LoginScreen extends React.Component {
         </Picker>
         <TouchableOpacity 
           style={styles.loginBtn}
-          onClick={()=>this.signIn()}>
+          onClick={this.state.isLogin ? () => this.signIn2() : () => this.signIn()}>
           <Text style={styles.loginText}>LOGIN</Text>
         </TouchableOpacity>
         <TouchableOpacity>
