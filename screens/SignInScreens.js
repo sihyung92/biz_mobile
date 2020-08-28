@@ -22,6 +22,7 @@ export default class LoginScreen extends React.Component {
       corps: Array(0),
       langs: Array(0),
       isLogin : false,
+      token : "",
     }
   }
   
@@ -36,6 +37,7 @@ export default class LoginScreen extends React.Component {
       }
       return false;
     }
+    return true;
   }
 
   validatePasswordAndAlert(password) {
@@ -49,6 +51,7 @@ export default class LoginScreen extends React.Component {
       }
       return false;
     }
+    return true;
   }
 
   updateCorp(corpId){
@@ -59,44 +62,6 @@ export default class LoginScreen extends React.Component {
     }
   }
 
-  signInTest = async() => {
-    const message = await axios.post(BASE_URL + '/mobile/biz/login.json?flag=login',{
-      loginInfo: {
-        appTp	 : "W_MAPP",
-        userPw : "admin12",
-        userId : "admin",
-      }
-    })
-    .then( (response) => {
-      if ( !response.data.success ){
-        const alertTitle = '로그인 실패'
-        const alertText = '아이디 / 비밀번호가 틀렸습니다.'
-        if (Platform.OS === 'web') {
-          alert(alertText)
-        } else {
-          Alert.alert(alertTitle, alertText)
-        }
-        return;
-      }
-
-      AsyncStorage.setItem("token", response.data.token);
-      this.setState({
-        corps : response.data.corps,
-        langs : response.data.langs,
-        isLogin : true,
-      });
-    })
-    .catch( (error) => {
-        console.log(error);
-        const alertTitle = '로그인 실패'
-        const alertText = '서버에 오류가 발생하였습니다.'
-        if (Platform.OS === 'web') {
-          alert(alertText)
-        } else {
-          Alert.alert(alertTitle, alertText)
-        }
-    }) ;
-  }
   signIn = async() => {
 
     if( !this.validateIDAndAlert(this.state.userId) ){
@@ -126,10 +91,10 @@ export default class LoginScreen extends React.Component {
         return;
       }
 
-      AsyncStorage.setItem("token", response.data.token);
       this.setState({
         corps : response.data.corps,
         langs : response.data.langs,
+        token : response.data.token,
         isLogin : true,
       });
     })
@@ -158,6 +123,7 @@ export default class LoginScreen extends React.Component {
     }
     AsyncStorage.setItem("corpId", this.state.corp.corpId);
     AsyncStorage.setItem("corpNm", this.state.corp.corpNm);
+    AsyncStorage.setItem("token", this.state.token);
     this.props.navigation.navigate('Main');
   }
 
@@ -199,7 +165,7 @@ export default class LoginScreen extends React.Component {
         </Picker>
         <TouchableOpacity 
           style={styles.loginBtn}
-          onClick={this.state.isLogin ? () => this.goToMain() : () => this.signInTest()}>
+          onClick={this.state.isLogin ? () => this.goToMain() : () => this.signIn()}>
           <Text style={styles.loginText}>LOGIN</Text>
         </TouchableOpacity>
         <TouchableOpacity>
