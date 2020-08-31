@@ -1,11 +1,11 @@
 import React from 'react';
 import axios from 'axios';
-import { StyleSheet, Text, View, TextInput, TouchableOpacity, AsyncStorage, Alert, Platform, Picker, ImageBackground } from 'react-native';
+import { StyleSheet, Text, View, TextInput, TouchableOpacity, AsyncStorage, Alert, Platform, Picker, ImageBackground, Image } from 'react-native';
 import { BASE_URL } from '../constant/Constant'
 
 export default class LoginScreen extends React.Component {
   static navigationOptions = {
-    title: 'Login',
+    title: 'Login',   
     header: null,
   }
   constructor(props) {
@@ -132,17 +132,26 @@ export default class LoginScreen extends React.Component {
     return (
       <View style={styles.container}>
         <ImageBackground
-          source={require('../assets/image/main_bg@3x.png')}  style={styles.backgroundImage}>
+          style={styles.backgroundImage}>
+        <View style = {styles.logo}>
+          <Image
+          style={{width : '30%' , height: '30%'}} 
+          source={require('../assets/image/logo_1540.png')}/>
+        </View>
         <View style={styles.input}>
           <View style={styles.IdInputView} >
-            <View/>
+            <Image
+            style={{flex:1, flexDirection:'row'}} 
+            source={require('../assets/image/ic_user.png')}/>
             <TextInput  
               style={styles.inputId}
               placeholder="ID..." 
               onChangeText={text => this.setState({userId:text})}/>
           </View>
           <View style={styles.PasswordInputView} >
-            <View/>
+            <Image
+            style={{flex:1, flexDirection:'row'}} 
+            source={require('../assets/image/ic_pw.png')}/>
             <TextInput  
               secureTextEntry
               style={styles.inputPassword}
@@ -150,11 +159,11 @@ export default class LoginScreen extends React.Component {
               onChangeText={text => this.setState({password:text})}/>
           </View>
         </View>
-        <View style={styles.combo}>
+        {
+          this.state.isLogin && <View style={styles.combo}>
           <Picker
             selectedValue={this.state.corp.corpId}
             onValueChange={ (corpId) => this.updateCorp(corpId) }
-            style={{ width: 160, postion: 'absolute',fontSize:10 }}
             mode="dropdown"
           >
           <Picker.Item key={0} label = "Please Select Server..." value = ""/>
@@ -168,21 +177,23 @@ export default class LoginScreen extends React.Component {
           }
           </Picker>
         </View>
+        }
         <View style={styles.button}>
           <TouchableOpacity 
             style={styles.loginBtn}
             onClick={this.state.isLogin ? () => this.goToMain() : () => this.signIn()}>
             <Text style={styles.loginText}>LOGIN</Text>
           </TouchableOpacity>
-          <View>
+          <View style={styles.signUpBtns}>
             <TouchableOpacity>
-            <Text style={styles.loginText}>Signup</Text>
+            <Text style={styles.loginText}>Sign up</Text>
             </TouchableOpacity>
             <TouchableOpacity>
             <Text style={styles.loginText}>비밀번호 찾기</Text>
             </TouchableOpacity>
           </View>
         </View>
+        <View style={{flex : 2, flexDirection : "row"}} />
         </ImageBackground>
       </View>
     )
@@ -198,24 +209,40 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   backgroundImage:{
-    flex: 1,
-    resizeMode: 'corver', // or 'stretch'
     width: "100%",
-    height : "100%"
+    height : "100%",
+  },
+  logo:{
+    flex:3,
+    backgroundColor:'yellow',
+    alignItems:"center",
+    justifyContent:"center",
   },
   input:{
-    height:100,
+    flex: 1,
+    flexDirection:'column',
     backgroundColor:"blue",
+    alignItems:"center",
+    justifyContent:"center",
   },
   combo:{
-    height:100,
+    flex: 1,
+    flexDirection:'row',
     backgroundColor:"red",
+    alignItems:"center",
+    justifyContent:"center",
   },
   button:{
+    flex: 1,
+    flexDirection:'column',
     height:100,
     backgroundColor:"green",
+    alignItems:"center",
+    justifyContent:"center",
   },
   IdInputView:{
+    flex:1,
+    flexDirection:'row',
     width: "80%",
     height: 50,
     borderRadius: 5,
@@ -226,6 +253,8 @@ const styles = StyleSheet.create({
     marginBottom: 14,
   },
   PasswordInputView:{
+    flex:1,
+    flexDirection:'row',
     width: "80%",
     height: 50,
     borderRadius: 5,
@@ -235,9 +264,11 @@ const styles = StyleSheet.create({
     borderColor: "#d9d9d9",
   },
   inputId:{
+    flex:4,
+    flexDirection:"row",
     height: 50,
     backgroundColor: "#f9f9f9",
-    fontFamily: "NotoSans",
+    //fontFamily: "NotoSans",
     fontSize: 16,
     fontWeight: "normal",
     fontStyle: "normal",
@@ -247,8 +278,10 @@ const styles = StyleSheet.create({
     color: "#c9c9c9",
   },
   inputPassword:{
+    flex:4,
+    flexDirection:"row",    
     height: 50,
-    fontFamily: "NotoSans",
+    //fontFamily: "NotoSans",
     fontSize: 16,
     fontWeight: "normal",
     fontStyle: "normal",
@@ -272,13 +305,19 @@ const styles = StyleSheet.create({
     alignItems:"center",
     justifyContent:"center",
     marginTop:40,
-    marginBottom:10
+    marginBottom:10,
+
   },
-  logo:{
-    fontWeight:"bold",
-    fontSize:50,
-    color:"#fb5b5a",
-    marginBottom:40
+  loginText:{
+    //fontFamily: "NotoSans",
+    fontSize: 18,
+    fontWeight: "bold",
+    fontStyle: "normal",
+    color: "#ffffff",
+  },
+  signUpBtns:{
+    flex:1,
+    flexDirection:'row',
   },
 });
 
