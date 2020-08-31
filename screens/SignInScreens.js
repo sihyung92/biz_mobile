@@ -1,11 +1,12 @@
 import React from 'react';
 import axios from 'axios';
-import { StyleSheet, Text, View, TextInput, TouchableOpacity, AsyncStorage, Alert, Platform, Picker } from 'react-native';
+import { StyleSheet, Text, View, TextInput, TouchableOpacity, AsyncStorage, Alert, Platform, Picker, ImageBackground } from 'react-native';
 import { BASE_URL } from '../constant/Constant'
 
 export default class LoginScreen extends React.Component {
   static navigationOptions = {
-        title: 'Login',
+    title: 'Login',
+    header: null,
   }
   constructor(props) {
     super(props);
@@ -19,8 +20,8 @@ export default class LoginScreen extends React.Component {
         corpId: "",
         corpNm: "",
       },
-      corps: Array(0),
-      langs: Array(0),
+      corps: [],
+      langs: [],
       isLogin : false,
       token : "",
     }
@@ -130,47 +131,59 @@ export default class LoginScreen extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-         <Text style={styles.logo}>한국비즈넷</Text>
-        <View style={styles.inputView} >
-          <TextInput  
-            style={styles.inputText}
-            placeholder="ID..." 
-            placeholderTextColor="#003f5c"
-            onChangeText={text => this.setState({userId:text})}/>
+        <ImageBackground
+          source={require('../assets/image/main_bg@3x.png')}  style={styles.backgroundImage}>
+        <View style={styles.input}>
+          <View style={styles.IdInputView} >
+            <View/>
+            <TextInput  
+              style={styles.inputId}
+              placeholder="ID..." 
+              onChangeText={text => this.setState({userId:text})}/>
+          </View>
+          <View style={styles.PasswordInputView} >
+            <View/>
+            <TextInput  
+              secureTextEntry
+              style={styles.inputPassword}
+              placeholder="Password..." 
+              onChangeText={text => this.setState({password:text})}/>
+          </View>
         </View>
-        <View style={styles.inputView} >
-          <TextInput  
-            secureTextEntry
-            style={styles.inputText}
-            placeholder="Password..." 
-            placeholderTextColor="#003f5c"
-            onChangeText={text => this.setState({password:text})}/>
+        <View style={styles.combo}>
+          <Picker
+            selectedValue={this.state.corp.corpId}
+            onValueChange={ (corpId) => this.updateCorp(corpId) }
+            style={{ width: 160, postion: 'absolute',fontSize:10 }}
+            mode="dropdown"
+          >
+          <Picker.Item key={0} label = "Please Select Server..." value = ""/>
+          {
+            this.state.corps.map((corp, index) => 
+              <Picker.Item 
+              key={corp.corpId}
+              label = {corp.corpNm}
+              value = {corp.corpId} />
+            )
+          }
+          </Picker>
         </View>
-        <Picker
-          selectedValue={this.state.corp.corpId}
-          onValueChange={ (corpId) => this.updateCorp(corpId) }
-          style={{ width: 160, postion: 'absolute',fontSize:10 }}
-          mode="dropdown"
-          itemStyle={{ color:'red', fontWeight:'900', fontSize: 18, padding:30}}>
-        >
-        <Picker.Item key={0} label = "Please Select Server..."/>
-        {
-          this.state.corps.map((corp, index) => 
-            <Picker.Item 
-            key={corp.corpId}
-            label = {corp.corpNm}
-            value = {corp.corpId} />
-          )
-        }
-        </Picker>
-        <TouchableOpacity 
-          style={styles.loginBtn}
-          onClick={this.state.isLogin ? () => this.goToMain() : () => this.signIn()}>
-          <Text style={styles.loginText}>LOGIN</Text>
-        </TouchableOpacity>
-        <TouchableOpacity>
-          <Text style={styles.loginText}>Signup</Text>
-        </TouchableOpacity>
+        <View style={styles.button}>
+          <TouchableOpacity 
+            style={styles.loginBtn}
+            onClick={this.state.isLogin ? () => this.goToMain() : () => this.signIn()}>
+            <Text style={styles.loginText}>LOGIN</Text>
+          </TouchableOpacity>
+          <View>
+            <TouchableOpacity>
+            <Text style={styles.loginText}>Signup</Text>
+            </TouchableOpacity>
+            <TouchableOpacity>
+            <Text style={styles.loginText}>비밀번호 찾기</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+        </ImageBackground>
       </View>
     )
   }
@@ -179,28 +192,83 @@ export default class LoginScreen extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    flexDirection: 'column',
+    backgroundColor: 'pink',
     alignItems: 'center',
     justifyContent: 'center',
   },
-  inputView:{
-    width:"80%",
-    backgroundColor:"#465881",
-    borderRadius:25,
-    height:50,
-    marginBottom:20,
-    justifyContent:"center",
-    padding:20
+  backgroundImage:{
+    flex: 1,
+    resizeMode: 'corver', // or 'stretch'
+    width: "100%",
+    height : "100%"
   },
-  inputText:{
-    height:50,
-    color:"white"
+  input:{
+    height:100,
+    backgroundColor:"blue",
+  },
+  combo:{
+    height:100,
+    backgroundColor:"red",
+  },
+  button:{
+    height:100,
+    backgroundColor:"green",
+  },
+  IdInputView:{
+    width: "80%",
+    height: 50,
+    borderRadius: 5,
+    backgroundColor: "#f9f9f9",
+    borderStyle: "solid",
+    borderWidth: 2,
+    borderColor: "#d9d9d9",
+    marginBottom: 14,
+  },
+  PasswordInputView:{
+    width: "80%",
+    height: 50,
+    borderRadius: 5,
+    backgroundColor: "#f9f9f9",
+    borderStyle: "solid",
+    borderWidth: 2,
+    borderColor: "#d9d9d9",
+  },
+  inputId:{
+    height: 50,
+    backgroundColor: "#f9f9f9",
+    fontFamily: "NotoSans",
+    fontSize: 16,
+    fontWeight: "normal",
+    fontStyle: "normal",
+    lineHeight: 22,
+    letterSpacing: 0,
+    textAlign: "left",
+    color: "#c9c9c9",
+  },
+  inputPassword:{
+    height: 50,
+    fontFamily: "NotoSans",
+    fontSize: 16,
+    fontWeight: "normal",
+    fontStyle: "normal",
+    lineHeight: 22,
+    letterSpacing: 0,
+    textAlign: "left",
+    color: "#c9c9c9",
   },
   loginBtn:{
-    width:"80%",
-    backgroundColor:"#fb5b5a",
-    borderRadius:25,
-    height:50,
+    width: "80%",
+    height: 50,
+    borderRadius: 5,
+    backgroundColor: "#ff6658",
+    shadowColor: "rgba(0, 0, 0, 0.16)",
+    shadowOffset: {
+      width: 0,
+      height: 3
+    },
+    shadowRadius: 6,
+    shadowOpacity: 1,
     alignItems:"center",
     justifyContent:"center",
     marginTop:40,
