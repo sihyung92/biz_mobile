@@ -1,12 +1,13 @@
 import React from 'react';
 import axios from 'axios';
-import { StyleSheet, Text, View, TextInput, TouchableOpacity, AsyncStorage, Alert, Platform, Picker, ImageBackground, Image } from 'react-native';
+import { StyleSheet, Text, View, TextInput, TouchableOpacity, AsyncStorage, Alert, Platform, ImageBackground, Image } from 'react-native';
 import { BASE_URL } from '../constant/Constant'
+import RNPickerSelect from 'react-native-picker-select';
 
 export default class LoginScreen extends React.Component {
   static navigationOptions = {
     title: 'Login',   
-    header: null,
+    headerShown: null,
   }
   constructor(props) {
     super(props);
@@ -32,9 +33,9 @@ export default class LoginScreen extends React.Component {
       const alertTitle = '아이디를 입력해주세요.'
       const alertText = '아이디를 입력해주세요.'
       if (Platform.OS === 'web') {
-        alert(alertText)
+        alert(alertText);
       } else {
-        Alert.alert(alertTitle, alertText)
+        Alert.alert(alertTitle, alertText);
       }
       return false;
     }
@@ -91,7 +92,7 @@ export default class LoginScreen extends React.Component {
         }
         return;
       }
-
+      console.log(response.data);
       this.setState({
         corps : response.data.corps,
         langs : response.data.langs,
@@ -122,74 +123,96 @@ export default class LoginScreen extends React.Component {
       }
       return;
     }
-    AsyncStorage.setItem("corpId", this.state.corp.corpId);
-    AsyncStorage.setItem("corpNm", this.state.corp.corpNm);
-    AsyncStorage.setItem("token", this.state.token);
+    this._storeData("corpId", this.state.corp.corpId);
+    this._storeData("corpNm", this.state.corp.corpNm);
+    this._storeData("token", this.state.token);
     this.props.navigation.navigate('Main');
   }
+
+  _storeData = async (key, value) => {
+    try {
+      await AsyncStorage.setItem( key, JSON.stringify(value) );
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   render() {
     return (
       <View style={styles.container}>
         <ImageBackground
+          source={require('../../assets/image/main_bg.png')}
           style={styles.backgroundImage}>
         <View style = {styles.logo}>
           <Image
-          style={{width : '30%' , height: '30%'}} 
-          source={require('../assets/image/logo_1540.png')}/>
+          style={{width : 167.3 , height: 44.2}} 
+          source={require('../../assets/image/logo_1540.png')}/>
         </View>
         <View style={styles.input}>
-          <View style={styles.IdInputView} >
-            <Image
-            style={{flex:1, flexDirection:'row'}} 
-            source={require('../assets/image/ic_user.png')}/>
+          <View style={styles.IdInputView}>
+            <View
+              style={{flex:1, flexDirection:'row', alignItems:"center", justifyContent:"center",}}
+            >
+              <Image
+              style={{width:18, height:17}} 
+              source={require('../../assets/image/ic_user.png')}/>
+            </View>
             <TextInput  
               style={styles.inputId}
-              placeholder="ID..." 
+              placeholder="아이디"
               onChangeText={text => this.setState({userId:text})}/>
           </View>
           <View style={styles.PasswordInputView} >
-            <Image
-            style={{flex:1, flexDirection:'row'}} 
-            source={require('../assets/image/ic_pw.png')}/>
+            <View
+              style={{flex:1, flexDirection:'row', alignItems:"center", justifyContent:"center",}}
+            >
+              <Image
+              style={{width:18, height:17}} 
+              source={require('../../assets/image/ic_pw.png')}/>
+            </View>
             <TextInput  
               secureTextEntry
               style={styles.inputPassword}
-              placeholder="Password..." 
+              placeholder="비밀번호" 
               onChangeText={text => this.setState({password:text})}/>
           </View>
         </View>
         {
           this.state.isLogin && <View style={styles.combo}>
-          <Picker
-            selectedValue={this.state.corp.corpId}
+          <RNPickerSelect
+            placeholder={{
+              label: '서버를 선택해주세요.',
+              value: "",
+            }}
+            styles={{...pickerSelectStyles}}
             onValueChange={ (corpId) => this.updateCorp(corpId) }
-            mode="dropdown"
-          >
-          <Picker.Item key={0} label = "Please Select Server..." value = ""/>
-          {
-            this.state.corps.map((corp, index) => 
-              <Picker.Item 
-              key={corp.corpId}
-              label = {corp.corpNm}
-              value = {corp.corpId} />
-            )
-          }
-          </Picker>
+            items= 
+            {(() => this.state.corps.map((corp) => (
+                {  
+                  label: corp.corpNm,
+                  value: corp.corpId,
+                }
+               )
+              )
+            )()}
+          />
         </View>
         }
         <View style={styles.button}>
           <TouchableOpacity 
             style={styles.loginBtn}
-            onClick={this.state.isLogin ? () => this.goToMain() : () => this.signIn()}>
-            <Text style={styles.loginText}>LOGIN</Text>
+            onPress={this.state.isLogin ? () => this.goToMain() : () => this.signIn()}>
+            <Text style={styles.loginText}>로그인</Text>
           </TouchableOpacity>
           <View style={styles.signUpBtns}>
             <TouchableOpacity>
-            <Text style={styles.loginText}>Sign up</Text>
+              <Text style={styles.signUpText}>비밀번호 찾기</Text>
             </TouchableOpacity>
+            <View>
+              <Text style={styles.devideLine}>  |  </Text>
+            </View>
             <TouchableOpacity>
-            <Text style={styles.loginText}>비밀번호 찾기</Text>
+              <Text style={styles.signUpText}>회원가입</Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -204,7 +227,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: 'column',
-    backgroundColor: 'pink',
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -214,21 +236,22 @@ const styles = StyleSheet.create({
   },
   logo:{
     flex:3,
-    backgroundColor:'yellow',
+    //backgroundColor:'yellow',
     alignItems:"center",
     justifyContent:"center",
   },
   input:{
     flex: 1,
     flexDirection:'column',
-    backgroundColor:"blue",
+    //backgroundColor:"blue",
     alignItems:"center",
     justifyContent:"center",
+    paddingTop:20,
+    paddingBottom:20,
   },
   combo:{
     flex: 1,
     flexDirection:'row',
-    backgroundColor:"red",
     alignItems:"center",
     justifyContent:"center",
   },
@@ -236,7 +259,6 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection:'column',
     height:100,
-    backgroundColor:"green",
     alignItems:"center",
     justifyContent:"center",
   },
@@ -244,7 +266,8 @@ const styles = StyleSheet.create({
     flex:1,
     flexDirection:'row',
     width: "80%",
-    height: 50,
+    minHeight: 40,
+    maxHeight: 40,
     borderRadius: 5,
     backgroundColor: "#f9f9f9",
     borderStyle: "solid",
@@ -256,7 +279,8 @@ const styles = StyleSheet.create({
     flex:1,
     flexDirection:'row',
     width: "80%",
-    height: 50,
+    minHeight: 40,
+    maxHeight: 40,
     borderRadius: 5,
     backgroundColor: "#f9f9f9",
     borderStyle: "solid",
@@ -264,9 +288,8 @@ const styles = StyleSheet.create({
     borderColor: "#d9d9d9",
   },
   inputId:{
-    flex:4,
+    flex:8,
     flexDirection:"row",
-    height: 50,
     backgroundColor: "#f9f9f9",
     //fontFamily: "NotoSans",
     fontSize: 16,
@@ -275,12 +298,10 @@ const styles = StyleSheet.create({
     lineHeight: 22,
     letterSpacing: 0,
     textAlign: "left",
-    color: "#c9c9c9",
   },
   inputPassword:{
-    flex:4,
+    flex:8,
     flexDirection:"row",    
-    height: 50,
     //fontFamily: "NotoSans",
     fontSize: 16,
     fontWeight: "normal",
@@ -288,11 +309,10 @@ const styles = StyleSheet.create({
     lineHeight: 22,
     letterSpacing: 0,
     textAlign: "left",
-    color: "#c9c9c9",
   },
   loginBtn:{
     width: "80%",
-    height: 50,
+    height: 40,
     borderRadius: 5,
     backgroundColor: "#ff6658",
     shadowColor: "rgba(0, 0, 0, 0.16)",
@@ -304,16 +324,23 @@ const styles = StyleSheet.create({
     shadowOpacity: 1,
     alignItems:"center",
     justifyContent:"center",
-    marginTop:40,
-    marginBottom:10,
-
+    marginBottom:10,  
   },
   loginText:{
     //fontFamily: "NotoSans",
     fontSize: 18,
     fontWeight: "bold",
-    fontStyle: "normal",
     color: "#ffffff",
+  },
+  signUpText:{
+    //fontFamily: "NotoSans",
+    fontSize: 16,
+    fontWeight: "bold",
+    color: "#ffffff",
+  },
+  devideLine:{
+    fontSize: 15,
+    color: "#c9c9c9",
   },
   signUpBtns:{
     flex:1,
@@ -321,4 +348,30 @@ const styles = StyleSheet.create({
   },
 });
 
-
+const pickerSelectStyles = {
+	inputIOS: {
+		color: 'white',
+		paddingTop: 13,
+		paddingHorizontal: 10,
+		paddingBottom: 12,
+	},
+	inputAndroid: {
+		color: 'white',
+	},
+	placeholderColor: 'white',
+	underline: { borderTopWidth: 0 },
+	icon: {
+		position: 'absolute',
+		backgroundColor: 'transparent',
+		borderTopWidth: 5,
+		borderTopColor: '#00000099',
+		borderRightWidth: 5,
+		borderRightColor: 'transparent',
+		borderLeftWidth: 5,
+		borderLeftColor: 'transparent',
+		width: 0,
+		height: 0,
+		top: 20,
+		right: 15,
+	},
+};
