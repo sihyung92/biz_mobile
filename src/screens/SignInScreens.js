@@ -180,6 +180,7 @@ export default class LoginScreen extends React.Component {
         {
         this.state.isLogin && <View style={styles.combo}>
           <Picker
+                style={styles.twoPickers} itemStyle={styles.twoPickerItems}
                 selectedValue={this.state.corp.corpId}
                 onValueChange={ (corpId) => this.updateCorp(corpId) }
                 style={{ width: 160, postion: 'absolute',fontSize:10 }}	
@@ -253,6 +254,16 @@ const styles = StyleSheet.create({
     flexDirection:'row',
     alignItems:"center",
     justifyContent:"center",
+  },
+  twoPickers: {
+    width: 200,
+    height: 88,
+    backgroundColor: 'white',
+    borderColor: 'black',
+    borderWidth: 1,
+  },
+  twoPickerItems: {
+    height: 88,
   },
   button:{
     flex: 1,
