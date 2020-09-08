@@ -71,13 +71,6 @@ export default class HomeScreens extends React.Component {
               </Text>)
               } 
             </View>
-            <View>
-              <TouchableOpacity 
-                style={styles.actionButton}
-                onPress={() => this.navigation.dispatch(DrawerActions.openDrawer())}>          
-                <Text>으아 똥</Text>
-              </TouchableOpacity>
-           </View>
           </View>
         </ImageBackground>
       </View>
@@ -90,21 +83,22 @@ const styles = StyleSheet.create({
      flex: 1,
      alignItems: 'center',
      justifyContent: 'center',
-     flexDirection: 'column', 
+     flexDirection: 'row', 
   },
   backgroundImage :{
     width: "100%",
     height : "100%"
   },
   Innercontainer:{
+    flex: 1,
     paddingTop : '5%'
   },
 
   Middle:{
-    flex: 2,
-    alignItems:"center"
-    ,justifyContent:"center",
-    marginTop : 10
+    flex: 1,
+    alignItems:"center",
+    justifyContent:"center",
+    marginTop : 10,
   },
   MAN_IMG :{
     width: 60,
@@ -122,10 +116,11 @@ const styles = StyleSheet.create({
 
   Down:{
     flex: 3,
+    flexDirection: 'column', 
     alignItems:"center",
     justifyContent:"center",
-    marginTop:40
   },
+
   MenuBtn:{
     fontSize: 18,
     lineHeight: 27,
@@ -148,13 +143,5 @@ const styles = StyleSheet.create({
     lineHeight :51,
     marginBottom : 20
 
-  },
-  actionButton: {
-    flex:1,
-    alignSelf : 'flex-end',
-    position: 'absolute',
-    width: 50,
-    height: 50,
-    
   },
 })

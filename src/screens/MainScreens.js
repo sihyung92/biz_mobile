@@ -81,7 +81,7 @@ function CustomDrawerContent(props) {
                               marginLeft : 15,
                               marginTop : 15
                             }}
-                      source={require('../../assets/image/ic_close.png')}/>
+                      source={require('../../assets/image/btn_more.png')}/>
                 </View>
                 </View>
             </View>  
@@ -158,12 +158,12 @@ const styles = StyleSheet.create({
     marginTop : 35,
   },
   WIDE4:{
-    flexDirection: 'row'
-    ,    marginLeft :235,
+    flexDirection: 'row',
+    marginLeft :235,
     marginTop : -40
   },
   H_L_IMG :{
-    marginTop :3 ,
+    marginTop : 30,
     width: 12.2,
     height: 12.2,
   },
@@ -204,8 +204,8 @@ const styles = StyleSheet.create({
     lineHeight: 20,
     letterSpacing: -0.7,
     textAlign: "left",
-    color: "#ffffff"
-
+    color: "#ffffff",
+    marginTop : 26,
   },
   C:{
     width: 113,
