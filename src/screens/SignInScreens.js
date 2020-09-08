@@ -1,6 +1,6 @@
 import React from 'react';
 import axios from 'axios';
-import { StyleSheet, Text, View, TextInput, TouchableOpacity, AsyncStorage, Alert, Platform, ImageBackground, Image } from 'react-native';
+import { StyleSheet, Text, View, TextInput, TouchableOpacity, AsyncStorage, Alert, Platform, ImageBackground, Image, Picker } from 'react-native';
 import { BASE_URL } from '../constant/Constant'
 import RNPickerSelect from 'react-native-picker-select';
 
@@ -178,24 +178,23 @@ export default class LoginScreen extends React.Component {
           </View>
         </View>
         {
-          this.state.isLogin && <View style={styles.combo}>
-          <RNPickerSelect
-            placeholder={{
-              label: '서버를 선택해주세요.',
-              value: "",
-            }}
-            styles={{...pickerSelectStyles}}
-            onValueChange={ (corpId) => this.updateCorp(corpId) }
-            items= 
-            {(() => this.state.corps.map((corp) => (
-                {  
-                  label: corp.corpNm,
-                  value: corp.corpId,
-                }
-               )
-              )
-            )()}
-          />
+        this.state.isLogin && <View style={styles.combo}>
+          <Picker
+                selectedValue={this.state.corp.corpId}
+                onValueChange={ (corpId) => this.updateCorp(corpId) }
+                style={{ width: 160, postion: 'absolute',fontSize:10 }}	
+                mode="dropdown"
+          >
+              <Picker.Item key={0} label = "서버를 선택해주세요." value = ""/>
+              {	          
+                this.state.corps.map((corp, index) => 
+          <Picker.Item 
+            key={corp.corpId}
+            label = {corp.corpNm}
+            value = {corp.corpId} />
+                )
+              }
+          </Picker>
         </View>
         }
         <View style={styles.button}>
