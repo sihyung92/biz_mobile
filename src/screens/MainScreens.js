@@ -3,17 +3,20 @@ import { StyleSheet, View, Text, Button, Image ,ImageBackground  } from 'react-n
 import { NavigationContainer, DrawerActions } from '@react-navigation/native';
 import { createDrawerNavigator,  DrawerContentScrollView,  DrawerItemList,  DrawerItem } from '@react-navigation/drawer';
 import HomeScreens from './HomeScreens';
+import SDKScreens from './tempScreens1';
+import BookingScreens from './tempScreens2';
+import InvoiceScreens from './tempScreens3';
 
-function Feed({ navigation }) {
-  return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Button
-        title="Open drawer"
-        onPress={() => navigation.dispatch(DrawerActions.openDrawer())}
-      />
-    </View>
-  );
-}
+// function Feed({ navigation }) {
+//   return (
+//     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+//       <Button
+//         title="Open drawer"
+//         onPress={() => navigation.dispatch(DrawerActions.openDrawer())}
+//       />
+//     </View>
+//   );
+// }
 //목록 리스트 여따가 밑에 하나씩 추가하면됨 
 /*function Notifications() {
   return (
@@ -24,9 +27,9 @@ function Feed({ navigation }) {
 }
  //<Drawer.Screen name="Notifications" component={Notifications} />
 */
+
 function CustomDrawerContent(props) {
   return (
-
     <View style={styles.sideBarOut}>
       <ImageBackground
           source={require('../../assets/image/toggle_bg.png')}  style={styles.backgroundImage}>
@@ -41,7 +44,7 @@ function CustomDrawerContent(props) {
                   <Image
                     style={styles.H_L_IMG} 
                     source={require('../../assets/image/logout.png')}/>
-                  <Text  style={styles.H_L}>LOGOUT</Text>
+                  <Text style={styles.H_L}>LOGOUT</Text>
                 </View>
                 <View style={styles.WIDE2}>
                 <Image
@@ -111,6 +114,9 @@ function MyDrawer() {
   return (
     <Drawer.Navigator drawerContent={props => <CustomDrawerContent {...props} />}>
       <Drawer.Screen name="HomeScreens" component={HomeScreens} />
+      <Drawer.Screen name="SDKScreens" component={SDKScreens} />
+      <Drawer.Screen name="BookingScreens" component={BookingScreens} />
+      <Drawer.Screen name="InvoiceScreens" component={InvoiceScreens} />
     </Drawer.Navigator> 
   );
 }

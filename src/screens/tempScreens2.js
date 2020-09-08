@@ -44,8 +44,8 @@ export default class HomeScreens extends React.Component {
     }
   };
 
-  menuMove(props){
-
+  menuMove(){
+  
   };
 
   render() {
@@ -67,7 +67,7 @@ export default class HomeScreens extends React.Component {
               <Text
                 style={styles.MenuBtn}
                 key={value}
-                onClick ={(props)=>this.menuMove(props) }>
+                onClick ={()=>this.menuMove() }>
                 {value}
               </Text>)
               } 
