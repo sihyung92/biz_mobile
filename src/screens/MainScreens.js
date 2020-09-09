@@ -3,9 +3,6 @@ import { StyleSheet, View, Text, Button, Image ,ImageBackground  } from 'react-n
 import { NavigationContainer, DrawerActions } from '@react-navigation/native';
 import { createDrawerNavigator,  DrawerContentScrollView,  DrawerItemList,  DrawerItem } from '@react-navigation/drawer';
 import HomeScreens from './HomeScreens';
-import SDKScreens from './tempScreens1';
-import BookingScreens from './tempScreens2';
-import InvoiceScreens from './tempScreens3';
 
 // function Feed({ navigation }) {
 //   return (
@@ -31,76 +28,78 @@ import InvoiceScreens from './tempScreens3';
 function CustomDrawerContent(props) {
   return (
     <View style={styles.sideBarOut}>
-      <ImageBackground
-          source={require('../../assets/image/toggle_bg.png')}  style={styles.backgroundImage}>
-      <View style={styles.UP}>
-            <View  style={styles.Vertical}>
-                <View style={styles.WIDE1}>
-                  <Image
-                    style={styles.H_L_IMG} 
-                    source={require('../../assets/image/home.png')}/>
-                  <Text  style={styles.H_L}>HOME</Text>
-                  <Text  style={styles.H_L}>  |  </Text>
-                  <Image
-                    style={styles.H_L_IMG} 
-                    source={require('../../assets/image/logout.png')}/>
-                  <Text style={styles.H_L}>LOGOUT</Text>
-                </View>
-                <View style={styles.WIDE2}>
-                <Image
-                  style={{ width: 40,
-                          height: 40}}
-                  source={require('../../assets/image/img_muser.png')}/>
-                <Text  style={styles.C}>
-                  회사이름</Text>
-                <Image 
-                  style={styles.modify_IMG}
-                  source={require('../../assets/image/edit_ico.png')}/>
+        <ImageBackground
+            source={require('../../assets/image/toggle_bg.png')}
+            style={styles.backgroundImage}>
+            <View style={styles.UP}>
+                <View style={styles.Vertical}>
+                    <View style={styles.WIDE1}>
+                        <Image style={styles.H_L_IMG} source={require('../../assets/image/home.png')}/>
+                        <Text style={styles.H_L}>HOME</Text>
+                        <Text style={styles.H_L}>
+                            |
+                        </Text>
+                        <Image
+                            style={styles.H_L_IMG}
+                            source={require('../../assets/image/logout.png')}/>
+                        <Text style={styles.H_L}>LOGOUT</Text>
+                    </View>
+                    <View style={styles.WIDE2}>
+                        <Image
+                            style={{ width: 40,
+                              height: 40}
+                            }
+                            source={require('../../assets/image/img_muser.png')}/>
+                        <Text style={styles.C}>
+                            회사이름</Text>
+                        <Image
+                            style={styles.modify_IMG}
+                            source={require('../../assets/image/edit_ico.png')}/>
+                    </View>
+
+                    <View style={styles.WIDE3}>
+                        <View style={styles.round}>
+                            <Image
+                                style={styles.S_O_IMG}
+                                source={require('../../assets/image/ic_speaker.png')}/>
+
+                            <Text style={styles.S_O}>
+                                고객센터</Text>
+                        </View>
+                        <View style={styles.round}>
+                            <Image
+                                style={styles.S_O_IMG}
+                                source={require('../../assets/image/ic_settings.png')}/>
+                            <Text style={styles.S_O}>
+                                설정</Text>
+                        </View>
+                    </View>
+
+                    <View style={styles.WIDE4}>
+                        <View style={styles.cancelround}>
+                            <Image
+                                style={{ width: 17,
+                                  height: 17,
+                                  marginLeft : 15,
+                                  marginTop : 15
+                                }
+                                }
+                                source={require('../../assets/image/btn_more.png')}/>
+                        </View>
+                    </View>
                 </View>
 
-                <View style={styles.WIDE3}>
-                <View style={styles.round}>
-                  <Image
-                    style={styles.S_O_IMG} 
-                    source={require('../../assets/image/ic_speaker.png')}/>
-
-                   <Text  style={styles.S_O}>
-                        고객센터</Text>
-                </View>
-                <View style={styles.round}>
-                <Image
-                    style={styles.S_O_IMG} 
-                    source={require('../../assets/image/ic_settings.png')}/>
-                    <Text  style={styles.S_O}>
-                        설정</Text>
-                </View>
-                </View>
-
-                <View style={styles.WIDE4}>
-                <View style={styles.cancelround}>
-                  <Image
-                      style={{ width: 17,
-                              height: 17,
-                              marginLeft : 15,
-                              marginTop : 15
-                            }}
-                      source={require('../../assets/image/btn_more.png')}/>
-                </View>
-                </View>
-            </View>  
-               
-        </View>
+            </View>
         </ImageBackground>
 
-      <View style={styles.Down}>
-      <DrawerContentScrollView {...props}>
-        <DrawerItemList {...props} />
-        <DrawerItem
-          label="Close drawer"
-          onPress={() => props.navigation.dispatch(DrawerActions.closeDrawer())}
-        />
-      </DrawerContentScrollView>
-      </View>
+        <View style={styles.Down}>
+            <DrawerContentScrollView {...props}>
+                <DrawerItemList {...props}/>
+                <DrawerItem
+                    label="Close drawer"
+                    onPress={() => props.navigation.dispatch(DrawerActions.closeDrawer())}/>
+            </DrawerContentScrollView>
+        </View>
     </View>
   );
 }
@@ -114,9 +113,6 @@ function MyDrawer() {
   return (
     <Drawer.Navigator drawerContent={props => <CustomDrawerContent {...props} />}>
       <Drawer.Screen name="HomeScreens" component={HomeScreens} />
-      <Drawer.Screen name="SDKScreens" component={SDKScreens} />
-      <Drawer.Screen name="BookingScreens" component={BookingScreens} />
-      <Drawer.Screen name="InvoiceScreens" component={InvoiceScreens} />
     </Drawer.Navigator> 
   );
 }
@@ -228,7 +224,6 @@ const styles = StyleSheet.create({
     , marginLeft : 10
   },
   S_O:{
-
    // fontFamily: "NotoSansKR",
     fontSize: 14,
     fontWeight: "normal",

@@ -1,6 +1,6 @@
 import React from 'react';
 import axios from 'axios';
-import { StyleSheet, Text, View, TextInput, TouchableOpacity, AsyncStorage, Alert, Platform, ImageBackground, Image, Picker, KeyboardAvoidingView } from 'react-native';
+import { StyleSheet, Text, View, TextInput, TouchableOpacity, AsyncStorage, Alert, Platform, ImageBackground, Image, Picker } from 'react-native';
 import { BASE_URL } from '../constant/Constant'
 import RNPickerSelect from 'react-native-picker-select';
 
@@ -139,7 +139,7 @@ export default class LoginScreen extends React.Component {
 
   render() {
     return (
-      <KeyboardAvoidingView behavior={Platform.OS === "ios" ? "padding" : null} style={styles.container}>
+      <View style={styles.container}>
         <ImageBackground
           source={require('../../assets/image/main_bg.png')}
           style={styles.backgroundImage}>
@@ -218,7 +218,7 @@ export default class LoginScreen extends React.Component {
         </View>
         <View style={{flex : 2, flexDirection : "row"}} />
         </ImageBackground>
-      </KeyboardAvoidingView>
+      </View>
     )
   }
 }
