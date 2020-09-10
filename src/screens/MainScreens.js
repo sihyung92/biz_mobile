@@ -124,9 +124,7 @@ export default class MainScreens extends React.Component{
   }
   render(){
     return (
-      <NavigationContainer>
         <MyDrawer />
-      </NavigationContainer>
     )
   }
 
