@@ -33,8 +33,8 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-    signIn: (corps, langs, userToken) => dispatch(
-        memberActions.signIn(corps, langs, userToken)
+    signIn: (userToken) => dispatch(
+        memberActions.signIn(userToken)
     ),
     logIn: () => dispatch(memberActions.logIn()),
     logOut: () => dispatch(memberActions.logOut()),

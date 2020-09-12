@@ -5,6 +5,7 @@ import { BASE_URL } from '../constant/Constant'
 import RNPickerSelect from 'react-native-picker-select';
 
 let corps;
+let langs;
 export default class LoginScreen extends React.Component {
   constructor(props) {
     super(props);
@@ -81,10 +82,11 @@ export default class LoginScreen extends React.Component {
         }
         return;
       }
-      console.log(response.data);
-      const { langs, token} = response.data; 
+
+      const userToken = response.data.userToken; 
       corps = response.data.corps;
-      this.props.signIn(corps, langs, token);
+      langs = response.data.langs;
+      this.props.signIn(userToken);
     })
     .catch( (error) => {
         console.log(error);

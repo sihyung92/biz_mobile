@@ -6,7 +6,7 @@ const LOG_IN = 'member/LOG_IN';
 const LOG_OUT = 'member/LOG_OUT';
 const UPDATE_CORP = 'member/UPDATE_CORP';
 // 액션 생성 함수 생성
-export const signIn = createAction(SIGN_IN, (corps, langs, userToken) => ({corps:corps, langs:langs, userToken:userToken}));
+export const signIn = createAction(SIGN_IN, userToken => userToken);
 export const logIn = createAction(LOG_IN);
 export const logOut = createAction(LOG_OUT);
 export const updateCorp = createAction(UPDATE_CORP, (corpId, corpNm) => ({corpId: corpId,corpNm: corpNm}));
@@ -24,8 +24,7 @@ const initialState = {
     corpId: "",
     corpNm: "",
   },
-  corps: [],
-  langs: [],
+  lang: "",
   isLogin : false,
   userToken : "",
 };
@@ -34,9 +33,8 @@ const initialState = {
 // 두번째 파라미터는 초기 상태
 export default handleActions({
     //  [SIGN_IN]: (state, action) => ({ isSignedIn: true }) 액션 생략, 비구조화 할당
-  [SIGN_IN]: (state, {payload}) => {
-    const {corps, langs, userToken} = payload;
-    return ({ ...state, corps: corps, langs: langs, userToken: userToken, isSignedIn: true });
+  [SIGN_IN]: (state, {payload:userToken}) => {
+    return ({ ...state, userToken: userToken, isSignedIn: true });
   },
   //TODO: corpNm, corpId 받을 필요 없고 corps는 signINScreens에서 다룰 예정 
   [LOG_IN]:(state) => ({ ...state, isLogin:true}),
