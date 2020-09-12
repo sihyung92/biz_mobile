@@ -4,11 +4,8 @@ import { StyleSheet, Text, View, TextInput, TouchableOpacity, AsyncStorage, Aler
 import { BASE_URL } from '../constant/Constant'
 import RNPickerSelect from 'react-native-picker-select';
 
+let corps;
 export default class LoginScreen extends React.Component {
-  static navigationOptions = {
-    title: 'Login',   
-    headerShown: null,
-  }
   constructor(props) {
     super(props);
     this.state = {
@@ -56,14 +53,6 @@ export default class LoginScreen extends React.Component {
     return true;
   }
 
-  updateCorp(corpId){
-    try {
-      const corpNm  = this.state.corps.find(corp => corp.corpId == corpId).corpNm;
-      this.setState({corp:{corpNm : corpNm , corpId : corpId}});
-    } catch (error) {
-    }
-  }
-
   signIn = async() => {
 
     if( !this.validateIDAndAlert(this.state.userId) ){
@@ -93,12 +82,9 @@ export default class LoginScreen extends React.Component {
         return;
       }
       console.log(response.data);
-      this.setState({
-        corps : response.data.corps,
-        langs : response.data.langs,
-        token : response.data.token,
-        isLogin : true,
-      });
+      const { langs, token} = response.data; 
+      corps = response.data.corps;
+      this.props.signIn(corps, langs, token);
     })
     .catch( (error) => {
         console.log(error);
@@ -112,21 +98,23 @@ export default class LoginScreen extends React.Component {
     }) ;
   }
 
+  updateCorp = (corpId) => {
+    const corpNm  = corps.find(corp => corp.corpId == corpId).corpNm;
+    this.props.updateCorp(corpId,corpNm);
+  }
+
   goToMain = () => {
-    if( !this.state.corp.corpId ){
-      const alertTitle = '서버를 선택해주세요.'
-      const alertText = '서버를 선택해주세요.'
-      if (Platform.OS === 'web') {
-        alert(alertText)
-      } else {
-        Alert.alert(alertTitle, alertText)
-      }
-      return;
-    }
-    this._storeData("corpId", this.state.corp.corpId);
-    this._storeData("corpNm", this.state.corp.corpNm);
-    this._storeData("token", this.state.token);
-    this.props.navigation.navigate('Main');
+    // if( !this.state.corp.corpId ){
+    //   const alertTitle = '서버를 선택해주세요.'
+    //   const alertText = '서버를 선택해주세요.'
+    //   if (Platform.OS === 'web') {
+    //     alert(alertText)
+    //   } else {
+    //     Alert.alert(alertTitle, alertText)
+    //   }
+    //   return;
+    // }
+    this.props.logIn(this.props.corp.corpId, this.props.corp.corpNm);
   }
 
   _storeData = async (key, value) => {
@@ -178,17 +166,17 @@ export default class LoginScreen extends React.Component {
           </View>
         </View>
         {
-        this.state.isLogin && <View style={styles.combo}>
+        this.props.isSignedIn && <View style={styles.combo}>
           <Picker
                 style={styles.twoPickers} itemStyle={styles.twoPickerItems}
-                selectedValue={this.state.corp.corpId}
+                selectedValue={corps.corpId}
                 onValueChange={ (corpId) => this.updateCorp(corpId) }
                 style={{ width: 160, postion: 'absolute',fontSize:10 }}	
                 mode="dropdown"
           >
               <Picker.Item key={0} label = "서버를 선택해주세요." value = ""/>
               {	          
-                this.state.corps.map((corp, index) => 
+                corps.map((corp, index) => 
           <Picker.Item 
             key={corp.corpId}
             label = {corp.corpNm}
@@ -201,7 +189,7 @@ export default class LoginScreen extends React.Component {
         <View style={styles.button}>
           <TouchableOpacity 
             style={styles.loginBtn}
-            onPress={this.state.isLogin ? () => this.goToMain() : () => this.signIn()}>
+            onPress={this.props.isSignedIn? () => this.goToMain() : () => this.signIn()}>
             <Text style={styles.loginText}>로그인</Text>
           </TouchableOpacity>
           <View style={styles.signUpBtns}>

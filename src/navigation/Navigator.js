@@ -4,21 +4,22 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { NavigationContainer } from '@react-navigation/native';
 
 import MainScreen from '../screens/MainScreens';
-import SignInScreen from '../screens/SignInScreens';
+import SignInScreensContainer from '../screens/SignInScreensContainer';
 
 const Stack = createStackNavigator();
-let isSignedIn = false;
 
-function Navigator() {
+function Navigator(props) {
+    const { isLogin } = props;
+
     return (
         <NavigationContainer>
             <Stack.Navigator
-                initialRouteName={isSignedIn ? "Main" : "SignIn"}
+                initialRouteName={isLogin ? "Main" : "SignIn"}
                 screenOptions={{
                    gestureEnabled: true
                 }}>
                 {
-                    isSignedIn
+                    isLogin
                         ? (
                         <>
                         <Stack.Screen name="Main" component={MainScreen}/>
@@ -27,7 +28,7 @@ function Navigator() {
                         : 
                         (
                         <>
-                        <Stack.Screen name="SignIn" component={SignInScreen}/>
+                        <Stack.Screen name="SignIn" component={SignInScreensContainer} />
                         </>
                         )
                 }
