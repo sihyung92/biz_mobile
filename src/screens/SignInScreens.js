@@ -1,69 +1,28 @@
 import React from 'react';
 import axios from 'axios';
-import { StyleSheet, Text, View, TextInput, TouchableOpacity, AsyncStorage, Alert, Platform, ImageBackground, Image, Picker } from 'react-native';
-import { BASE_URL } from '../constant/Constant'
+import { StyleSheet, Text, View, TextInput, TouchableOpacity, AsyncStorage, Platform, ImageBackground, Image, Picker } from 'react-native';
+import { BASE_URL } from '../constant/Constant';
+import { passwordValidator, IDValidator, AlertAllPlatform } from '../core/util';
 import RNPickerSelect from 'react-native-picker-select';
 
-let corps;
-let langs;
 export default class LoginScreen extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      email: "abc@kobiznet.com",
       password: "",
-      roles: "A",
       userId: "",
-      userLang: "KO",
-      corp: {
-        corpId: "",
-        corpNm: "",
-      },
       corps: [],
       langs: [],
-      isLogin : false,
-      token : "",
     }
-  }
-  
-  validateIDAndAlert(userId) {
-    if( userId != null && userId.length === 0 ){
-      const alertTitle = '아이디를 입력해주세요.'
-      const alertText = '아이디를 입력해주세요.'
-      if (Platform.OS === 'web') {
-        alert(alertText);
-      } else {
-        Alert.alert(alertTitle, alertText);
-      }
-      return false;
-    }
-    return true;
-  }
-
-  validatePasswordAndAlert(password) {
-    if( password != null && password.length === 0 ){
-      const alertTitle = '비밀번호를 입력해주세요.'
-      const alertText = '비밀번호를 입력해주세요.'
-      if (Platform.OS === 'web') {
-        alert(alertText)
-      } else {
-        Alert.alert(alertTitle, alertText)
-      }
-      return false;
-    }
-    return true;
   }
 
   signIn = async() => {
-
-    if( !this.validateIDAndAlert(this.state.userId) ){
+    if( !IDValidator(this.state.userId) ){
       return;
     }
-
-    if( !this.validatePasswordAndAlert(this.state.password) ){
+    if( !passwordValidator(this.state.password) ){
       return;
     }
-  
     const message = await axios.post(BASE_URL + '/mobile/biz/login.json?flag=login',{
       loginInfo: {
         appTp	 : "W_MAPP",
@@ -75,47 +34,34 @@ export default class LoginScreen extends React.Component {
       if ( !response.data.success ){
         const alertTitle = '로그인 실패'
         const alertText = '아이디 / 비밀번호가 틀렸습니다.'
-        if (Platform.OS === 'web') {
-          alert(alertText)
-        } else {
-          Alert.alert(alertTitle, alertText)
-        }
+        AlertAllPlatform(alertText, alertTitle);
         return;
-      }
-
+      } 
       const userToken = response.data.userToken; 
-      corps = response.data.corps;
-      langs = response.data.langs;
-      this.props.signIn(userToken);
+      this.setState({corps: response.data.corps});
+      this.setState({langs: response.data.langs});
+      this.props.signIn(this.state.userId, userToken);
     })
     .catch( (error) => {
-        console.log(error);
-        const alertTitle = '로그인 실패'
-        const alertText = '서버에 오류가 발생하였습니다.'
-        if (Platform.OS === 'web') {
-          alert(alertText)
-        } else {
-          Alert.alert(alertTitle, alertText)
-        }
-    }) ;
+      console.log(error);
+      const alertTitle = '로그인 실패'
+      const alertText = '서버에 오류가 발생하였습니다.'
+      AlertAllPlatform(alertText, alertTitle);
+    })
   }
 
   updateCorp = (corpId) => {
-    const corpNm  = corps.find(corp => corp.corpId == corpId).corpNm;
+    const corpNm  = this.state.corps.find(corp => corp.corpId == corpId).corpNm;
     this.props.updateCorp(corpId,corpNm);
   }
 
   goToMain = () => {
-    // if( !this.state.corp.corpId ){
-    //   const alertTitle = '서버를 선택해주세요.'
-    //   const alertText = '서버를 선택해주세요.'
-    //   if (Platform.OS === 'web') {
-    //     alert(alertText)
-    //   } else {
-    //     Alert.alert(alertTitle, alertText)
-    //   }
-    //   return;
-    // }
+    if( !this.props.corp.corpId ){
+      const alertTitle = '서버를 선택해주세요.'
+      const alertText = '서버를 선택해주세요.'
+      AlertAllPlatform(alertText,alertTitle);
+      return;
+    }
     this.props.logIn(this.props.corp.corpId, this.props.corp.corpNm);
   }
 
@@ -150,7 +96,7 @@ export default class LoginScreen extends React.Component {
             <TextInput  
               style={styles.inputId}
               placeholder="아이디"
-              onChangeText={text => this.setState({userId:text})}/>
+              onChangeText={text => this.setState({userId: text})}/>
           </View>
           <View style={styles.PasswordInputView} >
             <View
@@ -164,21 +110,20 @@ export default class LoginScreen extends React.Component {
               secureTextEntry
               style={styles.inputPassword}
               placeholder="비밀번호" 
-              onChangeText={text => this.setState({password:text})}/>
+              onChangeText={text => this.setState({password: text})}/>
           </View>
         </View>
         {
         this.props.isSignedIn && <View style={styles.combo}>
           <Picker
                 style={styles.twoPickers} itemStyle={styles.twoPickerItems}
-                selectedValue={corps.corpId}
+                selectedValue={this.state.corps.corpId}
                 onValueChange={ (corpId) => this.updateCorp(corpId) }
-                style={{ width: 160, postion: 'absolute',fontSize:10 }}	
                 mode="dropdown"
           >
               <Picker.Item key={0} label = "서버를 선택해주세요." value = ""/>
               {	          
-                corps.map((corp, index) => 
+                this.state.corps.map((corp, index) => 
           <Picker.Item 
             key={corp.corpId}
             label = {corp.corpNm}
