@@ -1,6 +1,6 @@
 import React from 'react';
 import axios from 'axios';
-import { StyleSheet, Text, View, TextInput, TouchableOpacity, AsyncStorage, Platform, ImageBackground, Image, Picker } from 'react-native';
+import { StyleSheet, Text, Linking, View, TextInput, TouchableOpacity, AsyncStorage, Platform, ImageBackground, Image, Picker } from 'react-native';
 import { BASE_URL } from '../constant/Constant';
 import { passwordValidator, IDValidator, AlertAllPlatform } from '../core/util';
 import RNPickerSelect from 'react-native-picker-select';
@@ -141,13 +141,15 @@ export default class LoginScreen extends React.Component {
           </TouchableOpacity>
           <View style={styles.signUpBtns}>
             <TouchableOpacity>
-              <Text style={styles.signUpText}>비밀번호 찾기</Text>
+              <Text style={styles.signUpText}
+              onPress={Linking.openURL(BASE_URL)}>비밀번호 찾기</Text>
             </TouchableOpacity>
             <View>
               <Text style={styles.devideLine}>  |  </Text>
             </View>
             <TouchableOpacity>
-              <Text style={styles.signUpText}>회원가입</Text>
+              <Text style={styles.signUpText}
+              onPress={Linking.openURL(BASE_URL)}>회원가입</Text>
             </TouchableOpacity>
           </View>
         </View>
