@@ -1,6 +1,7 @@
 import React from 'react';
 import axios from 'axios';
-import { StyleSheet, Text, Linking, View, TextInput, TouchableOpacity, AsyncStorage, Platform, ImageBackground, Image, Picker } from 'react-native';
+import { StyleSheet, Text, View, TextInput, TouchableOpacity, AsyncStorage, Platform, ImageBackground, Image, Picker } from 'react-native';
+import * as WebBrowser from 'expo-web-browser';
 import { BASE_URL } from '../constant/Constant';
 import { passwordValidator, IDValidator, AlertAllPlatform } from '../core/util';
 import RNPickerSelect from 'react-native-picker-select';
@@ -65,6 +66,10 @@ export default class LoginScreen extends React.Component {
     this.props.logIn(this.props.corp.corpId, this.props.corp.corpNm);
   }
 
+  _handleOpenWithWebBrowser = (URL) => {
+    WebBrowser.openBrowserAsync(URL);
+  }
+
   _storeData = async (key, value) => {
     try {
       await AsyncStorage.setItem( key, JSON.stringify(value) );
@@ -116,7 +121,7 @@ export default class LoginScreen extends React.Component {
         {
         this.props.isSignedIn && <View style={styles.combo}>
           <Picker
-                style={styles.twoPickers} itemStyle={styles.twoPickerItems}
+                style={styles.picker} itemStyle={styles.pickerItems}
                 selectedValue={this.state.corps.corpId}
                 onValueChange={ (corpId) => this.updateCorp(corpId) }
                 mode="dropdown"
@@ -140,16 +145,16 @@ export default class LoginScreen extends React.Component {
             <Text style={styles.loginText}>로그인</Text>
           </TouchableOpacity>
           <View style={styles.signUpBtns}>
-            <TouchableOpacity>
-              <Text style={styles.signUpText}
-              onPress={Linking.openURL(BASE_URL)}>비밀번호 찾기</Text>
+            <TouchableOpacity
+              onPress={() => this._handleOpenWithWebBrowser("https://global.gsabis.com/forgot.htm")}>
+              <Text style={styles.signUpText}>비밀번호 찾기</Text>
             </TouchableOpacity>
             <View>
               <Text style={styles.devideLine}>  |  </Text>
             </View>
-            <TouchableOpacity>
-              <Text style={styles.signUpText}
-              onPress={Linking.openURL(BASE_URL)}>회원가입</Text>
+            <TouchableOpacity 
+              onPress={() => this._handleOpenWithWebBrowser("https://global.gsabis.com/user/register.htm")}>
+              <Text style={styles.signUpText}>회원가입</Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -192,15 +197,15 @@ const styles = StyleSheet.create({
     alignItems:"center",
     justifyContent:"center",
   },
-  twoPickers: {
-    width: 400,
-    height: 88,
-    backgroundColor: 'white',
-    borderColor: 'black',
-    borderWidth: 1,
+  picker: {
+    width: '60%',
+    //height: 40,
+    //backgroundColor: 'white',
+    //borderColor: 'black',
+    //borderWidth: 1,
   },
-  twoPickerItems: {
-    height: 88,
+  pickerItems: {
+    height: 40,
     fontSize : 11,
   },
   button:{
