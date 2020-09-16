@@ -55,6 +55,13 @@ export default class HomeScreens extends React.Component {
         <ImageBackground
           source={require('../../assets/image/main_bg.png')}  style={styles.backgroundImage}>
           <View style={styles.Innercontainer}>
+            <TouchableOpacity
+              style={{position:"absolute", left:30, top:30}}
+              onPress={(props)=> this.props.navigation.dispatch(DrawerActions.openDrawer())}>
+              <Image
+                style={{width:30, height:30}}
+                source={require('../../assets/image/btn_mmenu.png')}/>
+            </TouchableOpacity>
             <View style={styles.Middle}>
               <Image
                   style={styles.MAN_IMG} 
@@ -67,8 +74,7 @@ export default class HomeScreens extends React.Component {
               {this.state.MenuList.map((value) =>
               <Text
                 style={styles.MenuBtn}
-                key={value}
-                onClick ={(props)=> this.props.navigation.dispatch(DrawerActions.openDrawer()) }>
+                key={value}>
                 {value}
               </Text>)
               } 
@@ -93,9 +99,8 @@ const styles = StyleSheet.create({
   },
   Innercontainer:{
     flex: 1,
-    paddingTop : '5%'
+    paddingTop : '5%',
   },
-
   Middle:{
     flex: 1,
     alignItems:"center",
