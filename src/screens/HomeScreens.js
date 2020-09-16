@@ -1,6 +1,7 @@
 import React from 'react';
 import { StyleSheet, View, Text, Button, AsyncStorage, Image ,ImageBackground, TouchableOpacity } from 'react-native';
 import { DrawerActions } from '@react-navigation/native';
+import MenuBtn from '../components/MenuBtn.js'
 import axios from 'axios';
 
 export default class HomeScreens extends React.Component {
@@ -34,17 +35,6 @@ export default class HomeScreens extends React.Component {
     }
   };
 
-  _logOut = async () => {
-    try {
-      await AsyncStorage.removeItem(
-        'userToken'
-      );
-      this.props.navigation.navigate('Auth');
-    } catch (error) {
-      // Error saving data
-    }
-  };
-
   menuMove(props){
    this.props.navigation.navigate('SignIn');
   };
@@ -55,13 +45,7 @@ export default class HomeScreens extends React.Component {
         <ImageBackground
           source={require('../../assets/image/main_bg.png')}  style={styles.backgroundImage}>
           <View style={styles.Innercontainer}>
-            <TouchableOpacity
-              style={{position:"absolute", left:30, top:30}}
-              onPress={(props)=> this.props.navigation.dispatch(DrawerActions.openDrawer())}>
-              <Image
-                style={{width:30, height:30}}
-                source={require('../../assets/image/btn_mmenu.png')}/>
-            </TouchableOpacity>
+            <MenuBtn {...this.props}/>
             <View style={styles.Middle}>
               <Image
                   style={styles.MAN_IMG} 

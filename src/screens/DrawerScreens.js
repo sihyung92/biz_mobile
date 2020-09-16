@@ -40,7 +40,8 @@ export default function CustomDrawerContent(props) {
                             {props.corpNm}</Text>
                         <Image
                             style={styles.modify_IMG}
-                            source={require('../../assets/image/edit_ico.png')}/>
+                            source={require('../../assets/image/edit_ico.png')}
+                            onClick={() => props.navigation.navigate('MyPage')}/>
                     </View>
 
                     <View style={styles.WIDE3}>

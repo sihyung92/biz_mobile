@@ -5,6 +5,7 @@ import { NavigationContainer } from '@react-navigation/native';
 
 import MainNavigation from './MainNavigation';
 import SignInScreensContainer from '../screens/SignInScreensContainer';
+import MyPageScreens from '../screens/MyPageScreens';
 
 const Stack = createStackNavigator();
 
@@ -19,7 +20,7 @@ function Navigator(props) {
                    gestureEnabled: true
                 }}>
                 {
-                    isLogin
+                    !isLogin
                         ? (
                         <>
                         <Stack.Screen
@@ -27,6 +28,13 @@ function Navigator(props) {
                             component={MainNavigation}
                             options={{
                                 title: '메인메인메인',
+                            }}
+                        />
+                        <Stack.Screen
+                            name="MyPage"
+                            component={MyPageScreens}
+                            options={{
+                                title: '마이마이마이',
                             }}
                         />
                         </>
