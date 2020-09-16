@@ -3,7 +3,7 @@ import { createSwitchNavigator, createAppContainer } from 'react-navigation';
 import { createStackNavigator } from '@react-navigation/stack';
 import { NavigationContainer } from '@react-navigation/native';
 
-import MainScreen from '../screens/MainScreens';
+import MainNavigation from './MainNavigation';
 import SignInScreensContainer from '../screens/SignInScreensContainer';
 
 const Stack = createStackNavigator();
@@ -22,13 +22,25 @@ function Navigator(props) {
                     isLogin
                         ? (
                         <>
-                        <Stack.Screen name="Main" component={MainScreen}/>
+                        <Stack.Screen
+                            name="Main"
+                            component={MainNavigation}
+                            options={{
+                                title: '메인메인메인',
+                            }}
+                        />
                         </>
                         )
                         : 
                         (
                         <>
-                        <Stack.Screen name="SignIn" component={SignInScreensContainer} />
+                        <Stack.Screen
+                            name="SignIn"
+                            component={SignInScreensContainer}
+                            options={{
+                                title: '로그인로그인로그인',
+                            }
+                        }/>
                         </>
                         )
                 }

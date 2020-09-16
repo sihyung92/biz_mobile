@@ -1,5 +1,6 @@
 import React from 'react';
 import { StyleSheet, View, Text, Button, AsyncStorage, Image ,ImageBackground, TouchableOpacity } from 'react-native';
+import { DrawerActions } from '@react-navigation/native';
 import axios from 'axios';
 
 export default class HomeScreens extends React.Component {
@@ -45,7 +46,7 @@ export default class HomeScreens extends React.Component {
   };
 
   menuMove(props){
-
+   this.props.navigation.navigate('SignIn');
   };
 
   render() {
@@ -67,7 +68,7 @@ export default class HomeScreens extends React.Component {
               <Text
                 style={styles.MenuBtn}
                 key={value}
-                onClick ={(props)=>this.menuMove(props) }>
+                onClick ={(props)=> this.props.navigation.dispatch(DrawerActions.openDrawer()) }>
                 {value}
               </Text>)
               } 

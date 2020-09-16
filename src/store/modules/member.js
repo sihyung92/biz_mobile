@@ -39,7 +39,7 @@ export default handleActions({
   },
   //TODO: corpNm, corpId 받을 필요 없고 corps는 signINScreens에서 다룰 예정 
   [LOG_IN]:(state) => ({ ...state, isLogin:true}),
-  [LOG_OUT]: () => initialState,
+  [LOG_OUT]: () => (initialState),
   [UPDATE_CORP]: ( state , {payload}) => {
     const {corpNm, corpId} = payload;
     return ({...state, corp:{...state.corp, corpNm:corpNm, corpId:corpId}});

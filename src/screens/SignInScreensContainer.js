@@ -32,7 +32,7 @@ const mapStateToProps = (state) => ({
     userToken: state.member.userToken,
 });
 
-const mapDispatchToProps = (dispatch) => ({
+const mapDispatchToProps = (dispatch, ownProps) => ({
     signIn: (userId, userToken) => dispatch(
         memberActions.signIn(userId, userToken)
     ),
