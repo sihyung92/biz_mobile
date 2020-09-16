@@ -1,7 +1,13 @@
 import * as React from 'react';
 import { StyleSheet, View, Text, Button, Image ,ImageBackground  } from 'react-native';
+import * as WebBrowser from 'expo-web-browser';
 import { DrawerActions } from '@react-navigation/native';
 import { DrawerContentScrollView,  DrawerItemList,  DrawerItem } from '@react-navigation/drawer';
+
+const serviceCenterURL = "http://crm.kobiznet.co.kr/Default.aspx";
+const _handleOpenWithWebBrowser = (URL) => {
+    WebBrowser.openBrowserAsync(URL);
+}
 
 export default function CustomDrawerContent(props) {
   return (
@@ -41,9 +47,10 @@ export default function CustomDrawerContent(props) {
                         <View style={styles.round}>
                             <Image
                                 style={styles.S_O_IMG}
-                                source={require('../../assets/image/ic_speaker.png')}/>
-
-                            <Text style={styles.S_O}>
+                                source={require('../../assets/image/ic_speaker.png')}
+                                onPress={() => _handleOpenWithWebBrowser(serviceCenterURL)}/>
+                            <Text style={styles.S_O}
+                              onPress={() => _handleOpenWithWebBrowser(serviceCenterURL)}>
                                 고객센터</Text>
                         </View>
                         <View style={styles.round}>
