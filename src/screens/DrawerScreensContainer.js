@@ -9,12 +9,14 @@ const DrawerScreensContainer = (props) => {
         descriptors={props.descriptors}
         state={props.state}
         navigation={props.navigation}
-        logOut={props.logOut}/>
+        logOut={props.logOut}
+        corpNm={props.corpNm}/>
     )
 }
 
 const mapStateToProps = (state, ownProps) => ({
     ...ownProps,
+    corpNm : state.member.corp.corpNm
 });
 
 const mapDispatchToProps = (dispatch) => ({

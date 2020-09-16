@@ -37,7 +37,7 @@ export default function CustomDrawerContent(props) {
                             }
                             source={require('../../assets/image/img_muser.png')}/>
                         <Text style={styles.C}>
-                            회사이름</Text>
+                            {props.corpNm}</Text>
                         <Image
                             style={styles.modify_IMG}
                             source={require('../../assets/image/edit_ico.png')}/>
