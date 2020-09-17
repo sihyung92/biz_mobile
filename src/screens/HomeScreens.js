@@ -53,7 +53,7 @@ export default class HomeScreens extends React.Component {
                   source={require('../../assets/image/img_user.png')}/>
               <Text
                   style={styles.CORP_NM}
-              >(주) 한국비즈넷</Text>
+              >{this.props.corpNm}</Text>
             </View>  
             <View style={styles.Down}>  
               {

@@ -41,15 +41,18 @@ export default function CustomDrawerContent(props) {
                         maxHeight: 40}
                       }
                       source={require('../../assets/image/img_muser.png')}/>
-                  <Text style={styles.C}>
+                  <Text style={styles.C}
+                      onPress={() => props.navigation.navigate('MyPage')}>
                       {props.corpNm}</Text>
+                  <TouchableOpacity
+                    style={styles.modify_IMG}
+                    onPress={() => props.navigation.navigate('MyPage')}>
                   <Image
-                      style={styles.modify_IMG}
-                      source={require('../../assets/image/edit_ico.png')}
-                      onClick={() => props.navigation.navigate('MyPage')}/>
+                      style={{width:15, height:15}}
+                      source={require('../../assets/image/edit_ico.png')}/>
+                  </TouchableOpacity>
                   <View style={styles.padding}/>
               </View>
-
               <View style={styles.WIDE3}>
                   <View style={styles.padding}/>
                   <View style={styles.round}>
@@ -143,8 +146,9 @@ const styles = StyleSheet.create({
     maxHeight: 15,
   },
   modify_IMG:{
-    width: 12.2,
-    height: 12.2,
+    zIndex: 1,
+    width: 14,
+    height: 14,
   },
   round:{
     justifyContent:'space-around',
