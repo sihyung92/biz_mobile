@@ -1,9 +1,9 @@
-import HomeScreen from '../screens/HomeScreens';
-import MyPageScreens from '../screens/MyPageScreens';
+import HomeScreenContainer from '../screens/HomeScreensContainer';
+
 const menuNavigationData = [
   {
     name: 'Home',
-    component: HomeScreen,
+    component: HomeScreenContainer,
   }
 ];
 

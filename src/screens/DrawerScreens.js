@@ -72,7 +72,7 @@ export default function CustomDrawerContent(props) {
                                   marginTop : 15
                                 }
                                 }
-                                source={require('../../assets/image/btn_more.png')}/>
+                                source={require('../../assets/image/ic_close.png')}/>
                         </View>
                     </View>
                 </View>

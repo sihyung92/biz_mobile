@@ -20,7 +20,7 @@ function Navigator(props) {
                    gestureEnabled: true
                 }}>
                 {
-                    !isLogin
+                    isLogin
                         ? (
                         <>
                         <Stack.Screen

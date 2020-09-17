@@ -1,5 +1,5 @@
 import React from 'react';
-import { BackgrounImage, StyleSheet, View, Text, Button, AsyncStorage, Image ,ImageBackground, TouchableOpacity,Linking } from 'react-native';
+import { StyleSheet, View, Text, Button, AsyncStorage, Image ,ImageBackground, TouchableOpacity,Linking } from 'react-native';
 import axios from 'axios';
 import Background from '../../assets/image/main_bg.png';
 import { BASE_URL } from '../constant/Constant'
@@ -44,6 +44,9 @@ export default class HomeScreens extends React.Component {
   render() {
     return (
       <View style={styles.container}>
+      <ImageBackground
+        source={require('../../assets/image/main_bg.png')}
+        style={styles.backgroundImage}>     
       <Image
           style={{ width: 60,
           height: 60}}
@@ -91,6 +94,7 @@ export default class HomeScreens extends React.Component {
           </View>
 
         </View>  
+        </ImageBackground>
       </View>
     )
   }
@@ -103,8 +107,10 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundImage : "url("+Background+")"
-    
+  },
+  backgroundImage:{
+    width: "100%",
+    height : "100%",
   },
   ID_MODIFY:{
     fontFamily: "NotoSansKR",

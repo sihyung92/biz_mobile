@@ -63,7 +63,12 @@ export default class LoginScreen extends React.Component {
       AlertAllPlatform(alertText,alertTitle);
       return;
     }
+    this._getMenuList(this.props.corp.corpId, this.state.userId);
     this.props.logIn(this.props.corp.corpId, this.props.corp.corpNm);
+  }
+
+  _getMenuList = async(userId, corpId) =>{
+    this.props.loadMenu();
   }
 
   _handleOpenWithWebBrowser = (URL) => {
@@ -126,7 +131,7 @@ export default class LoginScreen extends React.Component {
                 onValueChange={ (corpId) => this.updateCorp(corpId) }
                 mode="dropdown"
           >
-              <Picker.Item key={0} label = "회사를 선택해주세요." value = ""/>
+              <Picker.Item key={0} label = "서버를 선택해주세요." value = ""/>
               {	          
                 this.state.corps.map((corp, index) => 
           <Picker.Item 

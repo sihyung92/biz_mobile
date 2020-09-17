@@ -1,7 +1,8 @@
 import React from 'react';
 import { StyleSheet, View, Text, Button, AsyncStorage, Image ,ImageBackground, TouchableOpacity } from 'react-native';
 import { DrawerActions } from '@react-navigation/native';
-import MenuBtn from '../components/MenuBtn.js'
+import MenuBtn from '../components/MenuBtn.js';
+import menuNavigationData from '../navigation/menuNavigationData';
 import axios from 'axios';
 
 export default class HomeScreens extends React.Component {
@@ -55,13 +56,20 @@ export default class HomeScreens extends React.Component {
               >(주) 한국비즈넷</Text>
             </View>  
             <View style={styles.Down}>  
-              {this.state.MenuList.map((value) =>
+              {
+              this.props.menuList.map((item, idx)  =>
               <Text
                 style={styles.MenuBtn}
-                key={value}>
-                {value}
+                key={`stack_item-${idx + 1}`}
+                onPress={() => this.props.navigation.navigate(item.name)}>
+                {item.name}
               </Text>)
               } 
+              <Text
+                style={styles.MenuBtn}
+                onPress={() => this.props.navigation.navigate("MyPage")}>
+                "마이마이"
+              </Text>
             </View>
           </View>
         </ImageBackground>

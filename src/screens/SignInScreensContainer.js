@@ -2,15 +2,17 @@ import React from 'react';
 import SignInScreens from './SignInScreens';
 import { connect } from 'react-redux';
 import * as memberActions from '../store/modules/member';
+import * as menuActions from '../store/modules/menu';
 
 const SignInScreensContainer = (props) => {
-    const {signIn, logIn, logOut, updateCorp, isSignedIn, corp} = props;
+    const {signIn, logIn, logOut, loadMenu, updateCorp, isSignedIn, corp} = props;
 
     return (
         <SignInScreens
             signIn={signIn}
             logIn={logIn}
             logOut={logOut}
+            loadMenu={loadMenu}
             updateCorp={updateCorp}
             isSignedIn={isSignedIn}
             corp={corp}/>
@@ -38,6 +40,7 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
     ),
     logIn: () => dispatch(memberActions.logIn()),
     logOut: () => dispatch(memberActions.logOut()),
+    loadMenu: (menuList) => dispatch(menuActions.loadMenu(menuList)),
     updateCorp: (corpId,corpNm) => dispatch(memberActions.updateCorp(corpId,corpNm))
 })
 
