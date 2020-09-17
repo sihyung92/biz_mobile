@@ -63,7 +63,7 @@ export default class LoginScreen extends React.Component {
       AlertAllPlatform(alertText,alertTitle);
       return;
     }
-    this._getMenuList(this.props.corp.corpId, this.state.userId);
+    //this._getMenuList(this.props.corp.corpId, this.state.userId);
     this.props.logIn(this.props.corp.corpId, this.props.corp.corpNm);
   }
 

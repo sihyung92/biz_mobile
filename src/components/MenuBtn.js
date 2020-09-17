@@ -6,11 +6,13 @@ export default function MenuBtn(props) {
     console.log(props);
     return <TouchableOpacity
         style={{
+            zIndex: 1,
             position: "absolute",
             left: 30,
             top: 30
         }}
-        onPress={() => props.navigation.dispatch(DrawerActions.toggleDrawer())}>
+        onPress={() => {
+            props.navigation.dispatch(DrawerActions.toggleDrawer())}}>
         <Image
             style={{
                 width: 30,

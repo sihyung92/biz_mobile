@@ -54,12 +54,12 @@ export default class HomeScreens extends React.Component {
 
         <View style={styles.ID_MODIFY_V}>
               <Text style={styles.ID_MODIFY}>아이디</Text>
-              <div
+              <View
               onClick={() => Linking.openURL(BASE_URL+ '/checkuser.htm?id='+this.state.MYPAGE.MODIFY_KEY)}>
               <Image 
                   style={styles.modify_IMG}
                   source={require('../../assets/image/edit_ico.png')}/>
-              </div>
+              </View>
         </View>
         
         <View style={styles.WIDE}>
@@ -113,7 +113,7 @@ const styles = StyleSheet.create({
     height : "100%",
   },
   ID_MODIFY:{
-    fontFamily: "NotoSansKR",
+    //fontFamily: "NotoSansKR",
     fontSize: 24,
     fontWeight: "bold",
     fontStyle: "normal",
@@ -131,7 +131,7 @@ const styles = StyleSheet.create({
   } ,
 
   LEFT_TEXT:{
-    fontFamily: "NotoSansKR",
+    //fontFamily: "NotoSansKR",
     fontSize: 16,
     fontWeight: "normal",
     fontStyle: "normal",
@@ -142,7 +142,7 @@ const styles = StyleSheet.create({
   },
 
   RIGHT_TEXT:{
-    fontFamily: "NotoSansKR",
+    //fontFamily: "NotoSansKR",
     fontSize: 16,
     fontWeight: "normal",
     fontStyle: "normal",
