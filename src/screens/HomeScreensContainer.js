@@ -4,9 +4,12 @@ import { connect } from 'react-redux';
 import * as menuActions from '../store/modules/menu';
 
 const HomeScreensContainer = (props) => {
-    const { menuList } = props;
+    const { descriptors, state, navigation, menuList } = props;
     return (
         <HomeScreens
+            descriptors={descriptors}
+            state={state}
+            navigation={navigation}
             menuList = {menuList}/>
     )
 }

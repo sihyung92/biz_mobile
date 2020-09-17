@@ -11,34 +11,14 @@ export const checkPermit = createAction(CHECK_PERMIT);
 // 모듈의 초기 상태를 정의합니다. (필수)
 //   menuList: {menuId: "", menuNm: "", menuPermit: "",}
 //0110011000 << 볼수있음
-//0010011000 << 에러 나야함
+//0010011000 << 에러나야함
 const initialState = {
-    menuList: [
-  {
-    name: 'Home',
-    menuId: '모바일테스트1',
-    menuPermit: '00110011',
-    //component: HomeScreenContainer,
-  },
-  {
-    name: 'Home',
-    menuId: '모바일테스트1',
-    menuPermit: '00110011',
-    //component: HomeScreenContainer,
-  },
-  {
-    name: 'Home',
-    menuId: '모바일테스트1',
-    menuPermit: '00110011',
-    //component: HomeScreenContainer,
-  },
-],
+    menuList: [],
 };
 
 // handleActions 의 첫번째 파라미터는 액션을 처리하는 함수들로 이뤄진 객체
 // 두번째 파라미터는 초기 상태
 export default handleActions({
-    //  [SIGN_IN]: (state, action) => ({ isSignedIn: true }) 액션 생략, 비구조화 할당
-  [LOAD_MENU]: (state, { payload: menuList }) => ({ ...state}),
+  [LOAD_MENU]: (state, { payload: menuList }) => ({ ...state, menuList: menuList }),
   [CHECK_PERMIT]:(state) => ({}),
 }, initialState);

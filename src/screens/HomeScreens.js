@@ -61,9 +61,11 @@ export default class HomeScreens extends React.Component {
               <Text
                 style={styles.MenuBtn}
                 key={`stack_item-${idx + 1}`}
-                onPress={() => this.props.navigation.navigate(item.name)}>
-                {item.name}
-              </Text>)
+                //onPress={() => this.props.navigation.navigate(item.name)}
+                >
+                {item.MENU_NM}
+              </Text>
+              )
               } 
               <Text
                 style={styles.MenuBtn}

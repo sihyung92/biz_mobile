@@ -4,13 +4,14 @@ import { connect } from 'react-redux';
 import * as memberActions from '../store/modules/member';
 
 const DrawerScreensContainer = (props) => {
+    const { descriptors, state, navigation, logOut, corpNm} = props;
     return (
         <DrawerScreens
-        descriptors={props.descriptors}
-        state={props.state}
-        navigation={props.navigation}
-        logOut={props.logOut}
-        corpNm={props.corpNm}/>
+        descriptors={descriptors}
+        state={state}
+        navigation={navigation}
+        logOut={logOut}
+        corpNm={corpNm}/>
     )
 }
 

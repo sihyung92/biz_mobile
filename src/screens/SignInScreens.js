@@ -67,8 +67,31 @@ export default class LoginScreen extends React.Component {
     this.props.logIn(this.props.corp.corpId, this.props.corp.corpNm);
   }
 
-  _getMenuList = async(userId, corpId) =>{
-    this.props.loadMenu();
+  _getMenuList = async(userId, corpId) => {
+    await axios.post("http://localhost:8080" + '/mobile/biz/getMenuList.do',{
+      phoneId	 : '38:30:F9:66:68:5A',
+      token : 'cVYjMT78408179OyOUQQ2020572611',
+      ssGrpSpcNm : 'KR0001' ,
+      corpId : corpId,
+      userId : userId,
+    })
+    .then( (response) => {
+      console.log(response);
+      if ( !response.data.success ){
+        const alertTitle = '메뉴 로딩 실패'
+        const alertText = '메뉴 로딩에 실패했습니다.'
+        AlertAllPlatform(alertText, alertTitle);
+        return;
+      }
+      const loadedMenu = response.data.data;  
+      this.props.loadMenu(loadedMenu);
+    })
+    .catch( (error) => {
+      console.log(error);
+      const alertTitle = '메뉴 로딩 실패'
+      const alertText = '서버 접속에 실패했습니다.'
+      AlertAllPlatform(alertText, alertTitle);
+    })
   }
 
   _handleOpenWithWebBrowser = (URL) => {
