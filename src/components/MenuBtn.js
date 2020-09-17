@@ -3,7 +3,6 @@ import {Image, TouchableOpacity} from 'react-native';
 import {DrawerActions} from '@react-navigation/native';
 
 export default function MenuBtn(props) {
-    console.log(props);
     return <TouchableOpacity
         style={{
             zIndex: 1,

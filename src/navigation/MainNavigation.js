@@ -14,12 +14,12 @@ export default class MainNavigation extends React.Component {
             <Drawer.Navigator drawerContent={props => <CustomDrawerContent {...props}/>}>
                 <Drawer.Screen name={'Home'} component={HomeScreensContainer}/>
                 {
-                    // menuNavigationData.map((item, idx) => (
-                    //     <Drawer.Screen
-                    //         key={`stack_item-${idx + 1}`}
-                    //         name={item.name}
-                    //         component={item.component}/>
-                    // ))
+                    menuNavigationData.map((item, idx) => (
+                        <Drawer.Screen
+                            key={`stack_item-${idx + 1}`}
+                            name={item.name}
+                            component={item.component}/>
+                    ))
                 }
             </Drawer.Navigator>
         )

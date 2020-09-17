@@ -63,7 +63,7 @@ export default class LoginScreen extends React.Component {
       AlertAllPlatform(alertText,alertTitle);
       return;
     }
-    //this._getMenuList(this.props.corp.corpId, this.state.userId);
+    this._getMenuList(this.props.corp.corpId, this.state.userId);
     this.props.logIn(this.props.corp.corpId, this.props.corp.corpNm);
   }
 
@@ -76,7 +76,6 @@ export default class LoginScreen extends React.Component {
       userId : userId,
     })
     .then( (response) => {
-      console.log(response);
       if ( !response.data.success ){
         const alertTitle = '메뉴 로딩 실패'
         const alertText = '메뉴 로딩에 실패했습니다.'
@@ -91,7 +90,7 @@ export default class LoginScreen extends React.Component {
       const alertTitle = '메뉴 로딩 실패'
       const alertText = '서버 접속에 실패했습니다.'
       AlertAllPlatform(alertText, alertTitle);
-    })
+    });
   }
 
   _handleOpenWithWebBrowser = (URL) => {

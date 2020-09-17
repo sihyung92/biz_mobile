@@ -4,6 +4,7 @@ import { DrawerActions } from '@react-navigation/native';
 import MenuBtn from '../components/MenuBtn.js';
 import menuNavigationData from '../navigation/menuNavigationData';
 import axios from 'axios';
+import { AlertAllPlatform } from '../core/util';
 
 export default class HomeScreens extends React.Component {
   constructor(props) {
@@ -57,21 +58,21 @@ export default class HomeScreens extends React.Component {
             </View>  
             <View style={styles.Down}>  
               {
-              this.props.menuList.map((item, idx)  =>
-              <Text
-                style={styles.MenuBtn}
-                key={`stack_item-${idx + 1}`}
-                //onPress={() => this.props.navigation.navigate(item.name)}
-                >
-                {item.MENU_NM}
-              </Text>
+              this.props.menuList.map((item, idx)  => {
+                const permitCheck = item.MENU_PERMIT.slice(1,2) === '1' ?
+                  () => this.props.navigation.navigate('모바일 테스트 메뉴1')
+                  :
+                  () => alert('메뉴에 접근할 권한이 없습니다.');
+                return <Text
+                  style={styles.MenuBtn}
+                  key={`stack_item-${idx + 1}`}
+                  onPress={() => permitCheck()}
+                  >
+                  {item.MENU_NM}
+                </Text>
+                }
               )
               } 
-              <Text
-                style={styles.MenuBtn}
-                onPress={() => this.props.navigation.navigate("MyPage")}>
-                "마이마이"
-              </Text>
             </View>
           </View>
         </ImageBackground>
