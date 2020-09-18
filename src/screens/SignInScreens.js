@@ -68,7 +68,7 @@ export default class LoginScreen extends React.Component {
   }
 
   _getMenuList = async(userId, corpId) => {
-    await axios.post("http://localhost:8080" + '/mobile/biz/getMenuList.do',{
+    await axios.post(BASE_URL + '/mobile/biz/getMenuList.do',{
       phoneId	 : '38:30:F9:66:68:5A',
       token : 'cVYjMT78408179OyOUQQ2020572611',
       ssGrpSpcNm : 'KR0001' ,
@@ -153,7 +153,7 @@ export default class LoginScreen extends React.Component {
                 onValueChange={ (corpId) => this.updateCorp(corpId) }
                 mode="dropdown"
           >
-              <Picker.Item key={0} label = "서버를 선택해주세요." value = ""/>
+              <Picker.Item key={0} label = "회사를 선택해주세요." value = ""/>
               {	          
                 this.state.corps.map((corp, index) => 
           <Picker.Item 
