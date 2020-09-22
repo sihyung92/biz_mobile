@@ -14,6 +14,7 @@ export default class LoginScreen extends React.Component {
       userId: "",
       corps: [],
       langs: [],
+      selectedCorp: "",
     }
   }
 
@@ -53,6 +54,7 @@ export default class LoginScreen extends React.Component {
 
   updateCorp = (corpId) => {
     const corpNm  = this.state.corps.find(corp => corp.corpId == corpId).corpNm;
+    this.setState({selectedCorp: {corpId: corpId, corpNm: corpNm}});
     this.props.updateCorp(corpId,corpNm);
   }
 
@@ -68,7 +70,8 @@ export default class LoginScreen extends React.Component {
   }
 
   _getMenuList = async(userId, corpId) => {
-    await axios.post(BASE_URL + '/mobile/biz/getMenuList.do',{
+    await axios.post(BASE_URL
+     + '/mobile/biz/getMenuList.do',{
       phoneId	 : '38:30:F9:66:68:5A',
       token : 'cVYjMT78408179OyOUQQ2020572611',
       ssGrpSpcNm : 'KR0001' ,
@@ -149,9 +152,8 @@ export default class LoginScreen extends React.Component {
         this.props.isSignedIn && <View style={styles.combo}>
           <Picker
                 style={styles.picker} itemStyle={styles.pickerItems}
-                selectedValue={this.state.corps.corpId}
+                selectedValue={this.state.selectedCorp.corpId}
                 onValueChange={ (corpId) => this.updateCorp(corpId) }
-                mode="dropdown"
           >
               <Picker.Item key={0} label = "회사를 선택해주세요." value = ""/>
               {	          
