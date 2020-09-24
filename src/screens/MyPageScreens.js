@@ -55,7 +55,7 @@ export default class HomeScreens extends React.Component {
         <View style={styles.ID_MODIFY_V}>
               <Text style={styles.ID_MODIFY}>아이디</Text>
               <View
-              onClick={() => Linking.openURL(BASE_URL+ '/checkuser.htm?id='+this.state.MYPAGE.MODIFY_KEY)}>
+                 onClick={() => Linking.openURL(BASE_URL+ '/checkuser.htm?id='+this.state.MYPAGE.MODIFY_KEY)}>
               <Image 
                   style={styles.modify_IMG}
                   source={require('../../assets/image/edit_ico.png')}/>
@@ -63,14 +63,13 @@ export default class HomeScreens extends React.Component {
         </View>
         
         <View style={styles.WIDE}>
-
-
           <View>
-          <Text style={styles.LEFT_TEXT}>회사명</Text>
-          <Text style={styles.LEFT_TEXT}>이름</Text>
-          <Text style={styles.LEFT_TEXT}>전화번호</Text>
-          <Text style={styles.LEFT_TEXT}>핸드폰번호</Text>
-          <Text style={styles.LEFT_TEXT}>이메일</Text>
+            <Text style={styles.LEFT_TEXT}>회사명</Text>
+            <View style={{height:0, borderColor:'black',borderWidth:1, }}/>
+            <Text style={styles.LEFT_TEXT}>이름</Text>
+            <Text style={styles.LEFT_TEXT}>전화번호</Text>
+            <Text style={styles.LEFT_TEXT}>핸드폰번호</Text>
+            <Text style={styles.LEFT_TEXT}>이메일</Text>
           </View>  
 
           <View>
@@ -92,7 +91,6 @@ export default class HomeScreens extends React.Component {
             </Text>
            
           </View>
-
         </View>  
         </ImageBackground>
       </View>
@@ -105,15 +103,15 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: 'column',
-    alignItems: 'center',
-    justifyContent: 'center',
   },
   backgroundImage:{
     width: "100%",
     height : "100%",
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   ID_MODIFY:{
-    //fontFamily: "NotoSansKR",
+    fontFamily: "NotoSans",
     fontSize: 24,
     fontWeight: "bold",
     fontStyle: "normal",
@@ -126,8 +124,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row'
   },
   WIDE:{
-    flexDirection: 'row'
-
+    flexDirection: 'row',
+    backgroundColor: "#ffffff",
   } ,
 
   LEFT_TEXT:{
