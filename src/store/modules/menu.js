@@ -10,6 +10,7 @@ export const checkPermit = createAction(CHECK_PERMIT);
 
 // 모듈의 초기 상태를 정의합니다. (필수)
 //   menuList: {menuId: "", menuNm: "", menuPermit: "",}
+//TODO : 현재 menu ID 및 menuNm 안 받아오고 있음 API 수정요 
 //0110011000 << 볼수있음
 //0010011000 << 에러나야함
 const initialState = {

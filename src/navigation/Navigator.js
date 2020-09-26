@@ -3,7 +3,7 @@ import { createSwitchNavigator, createAppContainer } from 'react-navigation';
 import { createStackNavigator } from '@react-navigation/stack';
 import { NavigationContainer } from '@react-navigation/native';
 
-import MainNavigation from './MainNavigation';
+import MainNavigationContainer from './MainNavigationContainer';
 import SignInScreensContainer from '../screens/SignInScreensContainer';
 import MyPageScreens from '../screens/MyPageScreens';
 
@@ -25,7 +25,7 @@ function Navigator(props) {
                         <>
                         <Stack.Screen
                             name="Main"
-                            component={MainNavigation}
+                            component={MainNavigationContainer}
                             options={{
                                 title: '메인메인메인',
                             }}

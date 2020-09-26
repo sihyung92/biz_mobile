@@ -60,7 +60,7 @@ export default class HomeScreens extends React.Component {
               {
               this.props.menuList.map((item, idx)  => {
                 const permitCheck = item.MENU_PERMIT.slice(1,2) === '1' ?
-                  () => this.props.navigation.navigate('모바일 테스트 메뉴1')
+                  () => this.props.navigation.navigate(item.MENU_NM_S)
                   :
                   () => alert('메뉴에 접근할 권한이 없습니다.');
                 return <Text
