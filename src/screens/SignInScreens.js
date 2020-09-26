@@ -273,7 +273,7 @@ const styles = StyleSheet.create({
     flex:8,
     flexDirection:"row",
     backgroundColor: "#f9f9f9",
-    fontFamily: "NotoSans",
+    fontFamily: "NotoSansKR",
     fontSize: 16,
     fontWeight: "normal",
     fontStyle: "normal",
@@ -284,7 +284,7 @@ const styles = StyleSheet.create({
   inputPassword:{
     flex:8,
     flexDirection:"row",    
-    fontFamily: "NotoSans",
+    fontFamily: "NotoSansKR",
     fontSize: 16,
     fontWeight: "normal",
     fontStyle: "normal",
@@ -309,13 +309,13 @@ const styles = StyleSheet.create({
     marginBottom:10,  
   },
   loginText:{
-    fontFamily: "NotoSans",
+    fontFamily: "NotoSansKR",
     fontSize: 18,
     fontWeight: "bold",
     color: "#ffffff",
   },
   signUpText:{
-    fontFamily: "NotoSans",
+    fontFamily: "NotoSansKR",
     fontSize: 16,
     fontWeight: "bold",
     color: "#ffffff",
