@@ -47,53 +47,57 @@ export default class HomeScreens extends React.Component {
       <ImageBackground
         source={require('../../assets/image/main_bg.png')}
         style={styles.backgroundImage}>     
-      <Image
-          style={{ width: 60,
-          height: 60}}
-          source={require('../../assets/image/img_user.png')}/>
-
+        <View style={{flex:1}}/>
         <View style={styles.ID_MODIFY_V}>
-              <Text style={styles.ID_MODIFY}>아이디</Text>
-              <View
+            <View style= {{flex:1}}> 
+              <Image
+                style={{ width: 60,
+                height: 60}}
+                source={require('../../assets/image/img_user.png')}/> 
+            </View>
+              <View style= {{flex:1, flexDirection: 'row'}}
                  onClick={() => Linking.openURL(BASE_URL+ '/checkuser.htm?id='+this.state.MYPAGE.MODIFY_KEY)}>
-              <Image 
-                  style={styles.modify_IMG}
-                  source={require('../../assets/image/edit_ico.png')}/>
+                <Text style={styles.ID_MODIFY}>아이디</Text>
+                <Image 
+                    style={styles.modify_IMG}
+                    source={require('../../assets/image/edit_ico.png')}/>
               </View>
         </View>
         
-        <View style={styles.WIDE}>
-          <View>
+        <View style={styles.userInfoBox}>
+          <View style={{flex : 1, flexDirection:'row'}}>
             <Text style={styles.LEFT_TEXT}>회사명</Text>
             <Text style={styles.RIGHT_TEXT}>
               : {this.state.MYPAGE.CORP_NM}
             </Text>
           </View>
-          <View>
+          <View style={{flex : 1, flexDirection:'row'}}>
             <Text style={styles.LEFT_TEXT}>이름</Text>
             <Text style={styles.RIGHT_TEXT}>
               : {this.state.MYPAGE.USER_NM}
             </Text>
           </View>
-          <View>
+          <View style={{flex : 1, flexDirection:'row'}}>
            <Text style={styles.LEFT_TEXT}>전화번호</Text>
            <Text style={styles.RIGHT_TEXT}>
               : {this.state.MYPAGE.TEL_NO}
             </Text>
           </View>
-          <View>
+          <View style={{flex : 1, flexDirection:'row'}}>
             <Text style={styles.LEFT_TEXT}>핸드폰번호</Text>
             <Text style={styles.RIGHT_TEXT}>
               : {this.state.MYPAGE.MOBILE_NO}
             </Text>
           </View>
-          <View>
+          <View style={{flex : 1, flexDirection:'row'}}>
             <Text style={styles.LEFT_TEXT}>이메일</Text>
             <Text style={styles.RIGHT_TEXT}>
               : {this.state.MYPAGE.EMAIL}
             </Text>
           </View>
-        </View>  
+        </View>
+
+        <View style={{flex:1}}/>  
         </ImageBackground>
       </View>
     )
@@ -120,36 +124,49 @@ const styles = StyleSheet.create({
     lineHeight: 36,
     letterSpacing: -1.2,
     textAlign: "left",
-    color: "#ffffff"
+    color: "#ffffff",
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   ID_MODIFY_V:{
-    flexDirection: 'row'
+    flex:1,
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor:'blue',
   },
-  WIDE:{
-    flexDirection: 'row',
-    backgroundColor: "#ffffff",
-  } ,
-
+  userInfoBox:{
+    flex : 3,
+    flexDirection:'column',
+    alignItems: 'stretch',
+    justifyContent: 'center',
+    backgroundColor:'white',
+    fontFamily: 'NotoSansKR',
+    fontSize: 16,
+    fontWeight: "normal",
+    width: '50%',
+  },
   LEFT_TEXT:{
-    //fontFamily: "NotoSansKR",
+    fontFamily: "NotoSansKR",
+    flex:1,
     fontSize: 16,
     fontWeight: "normal",
     fontStyle: "normal",
-    lineHeight: 24,
+    lineHeight: 80,
     letterSpacing: -0.8,
     textAlign: "left",
-    color: "#707070"
   },
 
   RIGHT_TEXT:{
-    //fontFamily: "NotoSansKR",
+    fontFamily: "NotoSansKR",
+    flex:1,
+    height:100,
     fontSize: 16,
     fontWeight: "normal",
     fontStyle: "normal",
-    lineHeight: 24,
+    lineHeight: 80,
     letterSpacing: -0.8,
     textAlign: "left",
-    color: "#707070"
   },
    modify_IMG:{
     marginTop :17,
