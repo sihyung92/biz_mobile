@@ -65,31 +65,33 @@ export default class HomeScreens extends React.Component {
         <View style={styles.WIDE}>
           <View>
             <Text style={styles.LEFT_TEXT}>회사명</Text>
-            <View style={{height:0, borderColor:'black',borderWidth:1, }}/>
-            <Text style={styles.LEFT_TEXT}>이름</Text>
-            <Text style={styles.LEFT_TEXT}>전화번호</Text>
-            <Text style={styles.LEFT_TEXT}>핸드폰번호</Text>
-            <Text style={styles.LEFT_TEXT}>이메일</Text>
-          </View>  
-
-          <View>
-            <Text></Text>
             <Text style={styles.RIGHT_TEXT}>
               : {this.state.MYPAGE.CORP_NM}
             </Text>
+          </View>
+          <View>
+            <Text style={styles.LEFT_TEXT}>이름</Text>
             <Text style={styles.RIGHT_TEXT}>
               : {this.state.MYPAGE.USER_NM}
             </Text>
-            <Text style={styles.RIGHT_TEXT}>
+          </View>
+          <View>
+           <Text style={styles.LEFT_TEXT}>전화번호</Text>
+           <Text style={styles.RIGHT_TEXT}>
               : {this.state.MYPAGE.TEL_NO}
             </Text>
+          </View>
+          <View>
+            <Text style={styles.LEFT_TEXT}>핸드폰번호</Text>
             <Text style={styles.RIGHT_TEXT}>
               : {this.state.MYPAGE.MOBILE_NO}
             </Text>
+          </View>
+          <View>
+            <Text style={styles.LEFT_TEXT}>이메일</Text>
             <Text style={styles.RIGHT_TEXT}>
               : {this.state.MYPAGE.EMAIL}
             </Text>
-           
           </View>
         </View>  
         </ImageBackground>
