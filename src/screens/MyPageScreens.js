@@ -1,6 +1,7 @@
 import React from 'react';
-import { StyleSheet, View, Text, Button, AsyncStorage, Image ,ImageBackground, TouchableOpacity,Linking } from 'react-native';
+import { StyleSheet, View, Text, Image ,ImageBackground } from 'react-native';
 import axios from 'axios';
+import * as WebBrowser from 'expo-web-browser';
 import Background from '../../assets/image/main_bg.png';
 import { BASE_URL } from '../constant/Constant'
 import MenuBtn from '../components/MenuBtn.js';
@@ -26,21 +27,14 @@ export default class HomeScreens extends React.Component {
     })
     .then(response => this.setState({MYPAGE: response.data}))
     .catch(function (error) {
-      alert("ERR");
+      alert('ERR');
     });
     
   }
-  
-  _retrieveData = async (key) => {
-    try {
-      const value = await AsyncStorage.getItem('key');
-      if (value !== null) {
-        return value;
-      }
-    } catch (error) {
-      // Error retrieving data
-    }
-  };
+
+  _handleOpenWithWebBrowser = (URL) => {
+    WebBrowser.openBrowserAsync(URL);
+  }
 
   render() {
     return (
@@ -50,55 +44,54 @@ export default class HomeScreens extends React.Component {
         style={styles.backgroundImage}>     
         <MenuBtn {...this.props}/>
         <View style={{flex:1}}/>
-        <View style={styles.ID_MODIFY_V}>
+        <View style={styles.idView}>
             <View style= {{flex:2}}> 
               <Image
-                style={{ width: 60,
-                height: 60}}
+                style={styles.userIcon}
                 source={require('../../assets/image/img_user.png')}/> 
             </View>
               <View style= {{flex:1, flexDirection: 'row'}}
-                 onClick={() => Linking.openURL(BASE_URL+ '/checkuser.htm?id='+this.state.MYPAGE.MODIFY_KEY)}>
-                <Text style={styles.ID_MODIFY}>아이디</Text>
+                 onClick={() => this._handleOpenWithWebBrowser(BASE_URL+ '/checkuser.htm?id='+this.state.MYPAGE.MODIFY_KEY)}>
+                <Text style={styles.idText}>아이디</Text>
                 <Image 
-                    style={styles.modify_IMG}
+                    style={styles.modifyImg}
                     source={require('../../assets/image/edit_ico.png')}/>
               </View>
         </View>
         <View style={{flex:1}}/>
 
         <View style={styles.userInfoBox}>
-          <View style={{flex : 1, flexDirection:'row'}}>
-            <Text style={styles.LEFT_TEXT}>회사명</Text>
-            <Text style={styles.RIGHT_TEXT}>
+          <View style={styles.userInfoView}>
+            <Text style={styles.infoText}>회사명</Text>
+            <Text style={styles.contentText}>
               {this.state.MYPAGE.CORP_NM}
             </Text>
           </View>
           <View style={styles.hairline} />
-          <View style={{flex : 1, flexDirection:'row'}}>
-            <Text style={styles.LEFT_TEXT}>이름</Text>
-            <Text style={styles.RIGHT_TEXT}>
+          <View style={styles.userInfoView}>
+            <Text style={styles.infoText}>이름</Text>
+            <Text style={styles.contentText}>
               {this.state.MYPAGE.USER_NM}
             </Text>
           </View>
           <View style={styles.hairline} />
-          <View style={{flex : 1, flexDirection:'row'}}>
-           <Text style={styles.LEFT_TEXT}>전화번호</Text>
-           <Text style={styles.RIGHT_TEXT}>
+          <View style={styles.userInfoView}>
+           <Text style={styles.infoText}>전화번호</Text>
+           <Text style={styles.contentText}>
               {this.state.MYPAGE.TEL_NO}
             </Text>
           </View>
           <View style={styles.hairline} />
-          <View style={{flex : 1, flexDirection:'row'}}>
-            <Text style={styles.LEFT_TEXT}>핸드폰번호</Text>
-            <Text style={styles.RIGHT_TEXT}>
+          <View style={styles.userInfoView}>
+            <Text style={styles.infoText}>핸드폰번호</Text>
+            <Text style={styles.contentText}>
               {this.state.MYPAGE.MOBILE_NO}
             </Text>
           </View>
           <View style={styles.hairline} />
-          <View style={{flex : 1, flexDirection:'row'}}>
-            <Text style={styles.LEFT_TEXT}>이메일</Text>
-            <Text style={styles.RIGHT_TEXT}>
+          <View style={styles.userInfoView}>
+            <Text style={styles.infoText}>이메일</Text>
+            <Text style={styles.contentText}>
               {this.state.MYPAGE.EMAIL}
             </Text>
           </View>
@@ -118,31 +111,35 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
   },
   backgroundImage:{
-    width: "100%",
-    height : "100%",
+    width: '100%',
+    height : '100%',
     alignItems: 'center',
     justifyContent: 'center',
   },
-  ID_MODIFY:{
-    fontFamily: "NotoSansKR",
-    fontSize: 24,
-    fontWeight: "bold",
-    fontStyle: "normal",
-    lineHeight: 36,
-    letterSpacing: -1.2,
-    textAlign: "left",
-    color: "#ffffff",
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  ID_MODIFY_V:{
+  idView:{
     flex: 2,
     flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'center',
     //backgroundColor:'blue',
   },
-  userInfoBox:{
+  idText:{
+    fontFamily: 'NotoSansKR',
+    fontSize: 24,
+    fontWeight: 'bold',
+    fontStyle: 'normal',
+    lineHeight: 36,
+    letterSpacing: -1.2,
+    textAlign: 'left',
+    color: '#ffffff',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  userIcon: {
+    width: 60,
+    height: 60
+  },
+  userInfoBox: {
     flex : 4,
     flexDirection:'column',
     alignItems: 'stretch',
@@ -150,10 +147,14 @@ const styles = StyleSheet.create({
     backgroundColor:'white',
     fontFamily: 'NotoSansKR',
     fontSize: 16,
-    fontWeight: "normal",
+    fontWeight: 'normal',
     width: '80%',
     paddingTop: 10,
     paddingBottom: 20,
+  },
+  userInfoView: {
+    flex : 1,
+    flexDirection:'row',
   },
   hairline:{
     backgroundColor: '#A2A2A2',
@@ -161,30 +162,29 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     width: '95%',
   },
-  LEFT_TEXT:{
-    fontFamily: "NotoSansKR",
+  infoText:{
+    fontFamily: 'NotoSansKR',
     flex:1,
     fontSize: 16,
-    fontWeight: "normal",
-    fontStyle: "normal",
+    fontWeight: 'normal',
+    fontStyle: 'normal',
     lineHeight: 50,
     letterSpacing: -0.8,
     marginLeft: '5%',
-    textAlign: "left",
+    textAlign: 'left',
   },
-
-  RIGHT_TEXT:{
-    fontFamily: "NotoSansKR",
+  contentText:{
+    fontFamily: 'NotoSansKR',
     flex: 2,
     height: 100,
     fontSize: 16,
-    fontWeight: "normal",
-    fontStyle: "normal",
+    fontWeight: 'normal',
+    fontStyle: 'normal',
     lineHeight: 50,
     letterSpacing: -0.8,
-    textAlign: "left",
+    textAlign: 'left',
   },
-   modify_IMG:{
+   modifyImg:{
     marginTop: 17,
     width: 12.2,
     height: 12.2,
