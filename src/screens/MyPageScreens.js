@@ -3,6 +3,7 @@ import { StyleSheet, View, Text, Button, AsyncStorage, Image ,ImageBackground, T
 import axios from 'axios';
 import Background from '../../assets/image/main_bg.png';
 import { BASE_URL } from '../constant/Constant'
+import MenuBtn from '../components/MenuBtn.js';
 
 export default class HomeScreens extends React.Component {
   constructor(props) {
@@ -47,9 +48,10 @@ export default class HomeScreens extends React.Component {
       <ImageBackground
         source={require('../../assets/image/main_bg.png')}
         style={styles.backgroundImage}>     
+        <MenuBtn {...this.props}/>
         <View style={{flex:1}}/>
         <View style={styles.ID_MODIFY_V}>
-            <View style= {{flex:1}}> 
+            <View style= {{flex:2}}> 
               <Image
                 style={{ width: 60,
                 height: 60}}
@@ -63,41 +65,46 @@ export default class HomeScreens extends React.Component {
                     source={require('../../assets/image/edit_ico.png')}/>
               </View>
         </View>
-        
+        <View style={{flex:1}}/>
+
         <View style={styles.userInfoBox}>
           <View style={{flex : 1, flexDirection:'row'}}>
             <Text style={styles.LEFT_TEXT}>회사명</Text>
             <Text style={styles.RIGHT_TEXT}>
-              : {this.state.MYPAGE.CORP_NM}
+              {this.state.MYPAGE.CORP_NM}
             </Text>
           </View>
+          <View style={styles.hairline} />
           <View style={{flex : 1, flexDirection:'row'}}>
             <Text style={styles.LEFT_TEXT}>이름</Text>
             <Text style={styles.RIGHT_TEXT}>
-              : {this.state.MYPAGE.USER_NM}
+              {this.state.MYPAGE.USER_NM}
             </Text>
           </View>
+          <View style={styles.hairline} />
           <View style={{flex : 1, flexDirection:'row'}}>
            <Text style={styles.LEFT_TEXT}>전화번호</Text>
            <Text style={styles.RIGHT_TEXT}>
-              : {this.state.MYPAGE.TEL_NO}
+              {this.state.MYPAGE.TEL_NO}
             </Text>
           </View>
+          <View style={styles.hairline} />
           <View style={{flex : 1, flexDirection:'row'}}>
             <Text style={styles.LEFT_TEXT}>핸드폰번호</Text>
             <Text style={styles.RIGHT_TEXT}>
-              : {this.state.MYPAGE.MOBILE_NO}
+              {this.state.MYPAGE.MOBILE_NO}
             </Text>
           </View>
+          <View style={styles.hairline} />
           <View style={{flex : 1, flexDirection:'row'}}>
             <Text style={styles.LEFT_TEXT}>이메일</Text>
             <Text style={styles.RIGHT_TEXT}>
-              : {this.state.MYPAGE.EMAIL}
+              {this.state.MYPAGE.EMAIL}
             </Text>
           </View>
         </View>
 
-        <View style={{flex:1}}/>  
+        <View style={{flex:3}}/>  
         </ImageBackground>
       </View>
     )
@@ -117,7 +124,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   ID_MODIFY:{
-    fontFamily: "NotoSans",
+    fontFamily: "NotoSansKR",
     fontSize: 24,
     fontWeight: "bold",
     fontStyle: "normal",
@@ -129,14 +136,14 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   ID_MODIFY_V:{
-    flex:1,
+    flex: 2,
     flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor:'blue',
+    //backgroundColor:'blue',
   },
   userInfoBox:{
-    flex : 3,
+    flex : 4,
     flexDirection:'column',
     alignItems: 'stretch',
     justifyContent: 'center',
@@ -144,7 +151,15 @@ const styles = StyleSheet.create({
     fontFamily: 'NotoSansKR',
     fontSize: 16,
     fontWeight: "normal",
-    width: '50%',
+    width: '80%',
+    paddingTop: 10,
+    paddingBottom: 20,
+  },
+  hairline:{
+    backgroundColor: '#A2A2A2',
+    height: 1,
+    alignSelf: 'center',
+    width: '95%',
   },
   LEFT_TEXT:{
     fontFamily: "NotoSansKR",
@@ -152,24 +167,25 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: "normal",
     fontStyle: "normal",
-    lineHeight: 80,
+    lineHeight: 50,
     letterSpacing: -0.8,
+    marginLeft: '5%',
     textAlign: "left",
   },
 
   RIGHT_TEXT:{
     fontFamily: "NotoSansKR",
-    flex:1,
-    height:100,
+    flex: 2,
+    height: 100,
     fontSize: 16,
     fontWeight: "normal",
     fontStyle: "normal",
-    lineHeight: 80,
+    lineHeight: 50,
     letterSpacing: -0.8,
     textAlign: "left",
   },
    modify_IMG:{
-    marginTop :17,
+    marginTop: 17,
     width: 12.2,
     height: 12.2,
   },
