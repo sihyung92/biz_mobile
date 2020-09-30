@@ -10,24 +10,23 @@ export default class HomeScreens extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      MYPAGE :[]
+      myPage :[]
     }
   }
   
   // 갖고올 주소 
   componentDidMount(){
     /*axios.post(BASE_URL+ '/mobile/biz/myPage.do')
-    .then(response => this.setState({MYPAGE: response.data}))
+    .then(response => this.setState({myPage: response.data}))
     */
     axios.post(BASE_URL+ '/mobile/biz/myPage.do',{
       phoneId :'TESTPHONE:19:09:10',
       token :'4UrYiE2680915i4sdlep2019011022',
       ssGrpSpcNm :'KR0001'
-      
     })
-    .then(response => this.setState({MYPAGE: response.data}))
+    .then(response => this.setState({myPage: response.data}))
     .catch(function (error) {
-      alert('ERR');
+      alert('유저 정보를 불러오는 데 오류가 발생하였습니다.');
     });
     
   }
@@ -42,19 +41,18 @@ export default class HomeScreens extends React.Component {
       <ImageBackground
         source={require('../../assets/image/main_bg.png')}
         style={styles.backgroundImage}>     
-        <MenuBtn {...this.props}/>
         <View style={{flex:1}}/>
-        <View style={styles.idView}>
+        <View style={styles.userImgAndIdView}>
             <View style= {{flex:2}}> 
               <Image
                 style={styles.userIcon}
                 source={require('../../assets/image/img_user.png')}/> 
             </View>
-              <View style= {{flex:1, flexDirection: 'row'}}
-                 onClick={() => this._handleOpenWithWebBrowser(BASE_URL+ '/checkuser.htm?id='+this.state.MYPAGE.MODIFY_KEY)}>
-                <Text style={styles.idText}>아이디</Text>
+              <View style= {styles.idView}
+                 onClick={() => this._handleOpenWithWebBrowser(BASE_URL+ '/checkuser.htm?id='+this.state.myPage.MODIFY_KEY)}>
+                <Text style={styles.idText}>{this.props.corpNm}</Text>
                 <Image 
-                    style={styles.modifyImg}
+                    style={styles.modifyLinkImg}
                     source={require('../../assets/image/edit_ico.png')}/>
               </View>
         </View>
@@ -64,35 +62,35 @@ export default class HomeScreens extends React.Component {
           <View style={styles.userInfoView}>
             <Text style={styles.infoText}>회사명</Text>
             <Text style={styles.contentText}>
-              {this.state.MYPAGE.CORP_NM}
+              {this.state.myPage.CORP_NM}
             </Text>
           </View>
           <View style={styles.hairline} />
           <View style={styles.userInfoView}>
             <Text style={styles.infoText}>이름</Text>
             <Text style={styles.contentText}>
-              {this.state.MYPAGE.USER_NM}
+              {this.state.myPage.USER_NM}
             </Text>
           </View>
           <View style={styles.hairline} />
           <View style={styles.userInfoView}>
            <Text style={styles.infoText}>전화번호</Text>
            <Text style={styles.contentText}>
-              {this.state.MYPAGE.TEL_NO}
+              {this.state.myPage.TEL_NO}
             </Text>
           </View>
           <View style={styles.hairline} />
           <View style={styles.userInfoView}>
             <Text style={styles.infoText}>핸드폰번호</Text>
             <Text style={styles.contentText}>
-              {this.state.MYPAGE.MOBILE_NO}
+              {this.state.myPage.MOBILE_NO}
             </Text>
           </View>
           <View style={styles.hairline} />
           <View style={styles.userInfoView}>
             <Text style={styles.infoText}>이메일</Text>
             <Text style={styles.contentText}>
-              {this.state.MYPAGE.EMAIL}
+              {this.state.myPage.EMAIL}
             </Text>
           </View>
         </View>
@@ -116,12 +114,19 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  idView:{
+  userImgAndIdView:{
     flex: 2,
     flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'center',
     //backgroundColor:'blue',
+  },
+  idView:{
+    flex: 1,
+    flexDirection: 'row',
+    //justifyContent: 'center',
+    alignItems:'center',
+    //backgroundColor : 'green',
   },
   idText:{
     fontFamily: 'NotoSansKR',
@@ -184,9 +189,10 @@ const styles = StyleSheet.create({
     letterSpacing: -0.8,
     textAlign: 'left',
   },
-   modifyImg:{
-    marginTop: 17,
+   modifyLinkImg:{
     width: 12.2,
     height: 12.2,
+    marginLeft: 5,
+    //backgroundColor: 'blue',
   },
 });
