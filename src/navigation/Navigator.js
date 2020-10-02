@@ -5,7 +5,7 @@ import { NavigationContainer } from '@react-navigation/native';
 
 import MainNavigationContainer from './MainNavigationContainer';
 import SignInScreensContainer from '../screens/SignInScreensContainer';
-import MyPageScreens from '../screens/MyPageScreens';
+import MyPageScreensContainer from '../screens/MyPageScreensContainer';
 
 const Stack = createStackNavigator();
 
@@ -32,7 +32,7 @@ function Navigator(props) {
                         />
                         <Stack.Screen
                             name="MyPage"
-                            component={MyPageScreens}
+                            component={MyPageScreensContainer}
                             options={{
                                 title: '마이마이마이',
                             }}
