@@ -5,6 +5,7 @@ import * as WebBrowser from 'expo-web-browser';
 import { BASE_URL } from '../constant/Constant';
 import { passwordValidator, IDValidator, AlertAllPlatform } from '../core/util';
 import RNPickerSelect from 'react-native-picker-select';
+import Loader from '../components/Loader';
 
 export default class LoginScreen extends React.Component {
   constructor(props) {
@@ -15,6 +16,7 @@ export default class LoginScreen extends React.Component {
       corps: [],
       langs: [],
       selectedCorp: "",
+      loading: false,
     }
   }
 
@@ -25,6 +27,8 @@ export default class LoginScreen extends React.Component {
     if( !passwordValidator(this.state.password) ){
       return;
     }
+    this.setState({...this.state, loading: true});
+
     const message = await axios.post(BASE_URL + '/mobile/biz/login.json?flag=login',{
       loginInfo: {
         appTp	 : "W_MAPP",
@@ -33,6 +37,7 @@ export default class LoginScreen extends React.Component {
       }
     })
     .then( (response) => {
+      this.setState({...this.state, loading: false});
       if ( !response.data.success ){
         const alertTitle = '로그인 실패'
         const alertText = '아이디 / 비밀번호가 틀렸습니다.'
@@ -114,6 +119,9 @@ export default class LoginScreen extends React.Component {
         <ImageBackground
           source={require('../../assets/image/main_bg.png')}
           style={styles.backgroundImage}>
+        {
+          this.state.loading && <Loader loading = { this.state.loading }/>
+        }
         <View style = {styles.logo}>
           <Image
           style={{width : 167.3 , height: 44.2}} 
