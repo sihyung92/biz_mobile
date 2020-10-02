@@ -127,7 +127,7 @@ export default class LoginScreen extends React.Component {
           source={require('../../assets/image/logo_1540.png')}/>
         </View>
         <View style={styles.input}>
-          <View style={styles.IdInputView}>
+          <View style={this.props.isSignedIn ? styles.IdInputViewAfterSignedIn : styles.IdInputView}>
             <View
               style={{flex:1, flexDirection:'row', alignItems:"center", justifyContent:"center",}}
             >
@@ -136,14 +136,15 @@ export default class LoginScreen extends React.Component {
               source={require('../../assets/image/ic_user.png')}/>
             </View>
             <TextInput  
-              style={styles.inputId}
+              id = "idInput"
+              style={this.props.isSignedIn ? styles.inputIdAfterSignedIn : styles.inputId}
               placeholder="아이디"
-              pattern= "[A-Za-z0-9]*"
+              editable={!this.props.isSignedIn}
               value={this.state.userID}
               onInput={(e) => e.target.value = ("" + e.target.value.replace(/[^A-Za-z0-9]/g, '')).toUpperCase()} //대문자, 숫자만 받음
               onChangeText={text => this.setState({userId: text})}/>
           </View>
-          <View style={styles.PasswordInputView} >
+          <View style={this.props.isSignedIn ? styles.PasswordInputViewAfterSignedIn : styles.PasswordInputView} >
             <View
               style={{flex:1, flexDirection:'row', alignItems:"center", justifyContent:"center",}}
             >
@@ -153,7 +154,9 @@ export default class LoginScreen extends React.Component {
             </View>
             <TextInput  
               secureTextEntry
-              style={styles.inputPassword}
+              id = "pwInput"
+              editable={!this.props.isSignedIn}
+              style={this.props.isSignedIn ? styles.inputPasswordAfterSignedIn: styles.inputPassword}
               placeholder="비밀번호" 
               onChangeText={text => this.setState({password: text})}/>
           </View>
@@ -267,6 +270,19 @@ const styles = StyleSheet.create({
     borderColor: "#d9d9d9",
     marginBottom: 14,
   },
+  IdInputViewAfterSignedIn:{
+    flex:1,
+    flexDirection:'row',
+    width: "80%",
+    minHeight: 40,
+    maxHeight: 40,
+    borderRadius: 5,
+    backgroundColor: "#e5e5e5",
+    borderStyle: "solid",
+    borderWidth: 2,
+    borderColor: "#d9d9d9",
+    marginBottom: 14,
+  },
   PasswordInputView:{
     flex:1,
     flexDirection:'row',
@@ -275,6 +291,18 @@ const styles = StyleSheet.create({
     maxHeight: 40,
     borderRadius: 5,
     backgroundColor: "#f9f9f9",
+    borderStyle: "solid",
+    borderWidth: 2,
+    borderColor: "#d9d9d9",
+  },
+  PasswordInputViewAfterSignedIn:{
+    flex:1,
+    flexDirection:'row',
+    width: "80%",
+    minHeight: 40,
+    maxHeight: 40,
+    borderRadius: 5,
+    backgroundColor: "#e5e5e5",
     borderStyle: "solid",
     borderWidth: 2,
     borderColor: "#d9d9d9",
@@ -291,6 +319,19 @@ const styles = StyleSheet.create({
     letterSpacing: 0,
     textAlign: "left",
   },
+  inputIdAfterSignedIn:{
+    flex:8,
+    flexDirection:"row",
+    backgroundColor: "#e5e5e5",
+    fontFamily: "NotoSansKR",
+    fontSize: 16,
+    fontWeight: "normal",
+    fontStyle: "normal",
+    lineHeight: 22,
+    letterSpacing: 0,
+    textAlign: "left",
+    color: "#cccccc",
+  },
   inputPassword:{
     flex:8,
     flexDirection:"row",    
@@ -301,6 +342,19 @@ const styles = StyleSheet.create({
     lineHeight: 22,
     letterSpacing: 0,
     textAlign: "left",
+  },
+  inputPasswordAfterSignedIn:{
+    flex:8,
+    flexDirection:"row",    
+    fontFamily: "NotoSansKR",
+    fontSize: 16,
+    fontWeight: "normal",
+    fontStyle: "normal",
+    lineHeight: 22,
+    letterSpacing: 0,
+    textAlign: "left",
+    backgroundColor: "#e5e5e5",
+    color: "#cccccc",
   },
   loginBtn:{
     width: "80%",
