@@ -119,9 +119,7 @@ export default class LoginScreen extends React.Component {
         <ImageBackground
           source={require('../../assets/image/main_bg.png')}
           style={styles.backgroundImage}>
-        {
-          this.state.loading && <Loader loading = { this.state.loading }/>
-        }
+        <Loader loading = { this.state.loading }/>
         <View style = {styles.logo}>
           <Image
           style={{width : 167.3 , height: 44.2}} 

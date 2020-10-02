@@ -14,7 +14,7 @@ const Loader = (props) => {
     ...attributes
   } = props;
   
-  return (
+  return loading && ( 
     <View
       transparent={true}
       animationType={'none'}
