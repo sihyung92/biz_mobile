@@ -105,13 +105,14 @@ export default class LoginScreen extends React.Component {
     WebBrowser.openBrowserAsync(URL);
   }
 
-  _storeData = async (key, value) => {
-    try {
-      await AsyncStorage.setItem( key, JSON.stringify(value) );
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  /* 현재 로컬스토리지(asyncStorage 사용하고 있지 않음, state로 로그인 정보 등 관리 중) */
+  // _storeData = async (key, value) => {
+  //   try {
+  //     await AsyncStorage.setItem( key, JSON.stringify(value) );
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
 
   render() {
     return (
@@ -137,6 +138,9 @@ export default class LoginScreen extends React.Component {
             <TextInput  
               style={styles.inputId}
               placeholder="아이디"
+              pattern= "[A-Za-z0-9]*"
+              value={this.state.userID}
+              onInput={(e) => e.target.value = ("" + e.target.value.replace(/[^A-Za-z0-9]/g, '')).toUpperCase()} //대문자, 숫자만 받음
               onChangeText={text => this.setState({userId: text})}/>
           </View>
           <View style={styles.PasswordInputView} >
