@@ -34,4 +34,4 @@
 
 9. menu > Terminal > New Terminal
  - yarn add expo
- - 권한 에러 발생시, 관리자 권한으로 CMD를 켠 후 `Set-ExecutionPolicy RemoteSigned` 입력  
+ - 권한 에러 발생시, 관리자 권한으로 PowerShell를 켠 후 `Set-ExecutionPolicy RemoteSigned` 입력  
